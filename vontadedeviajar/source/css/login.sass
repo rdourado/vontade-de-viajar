@@ -1,0 +1,124 @@
+@import "mixins"
+
+body,
+#wp-auth-check-wrap #wp-auth-check
+	background: $ice-light
+
+#login, .login
+	color: $gray
+	font: rem(16) $sans
+	h1 a
+		background: url(../img/logotype-full.svg) right center no-repeat
+		background-size: contain
+		border-left: rem(92) solid transparent
+		display: block
+		font: 0/0 serif
+		height: auto
+		margin-left: auto
+		margin-right: auto
+		overflow: visible
+		position: relative
+		width: rem(178 + 92 - 100)
+		&:before
+			content: ""
+			display: block
+			padding-top: percentage(83/178)
+		&:after
+			+stretch(0, false, 0, percentage(-92/178))
+			background: url(../img/compass.svg) no-repeat center center, url(../img/plane.svg) no-repeat center center
+			background-size: contain, 50%
+			content: ""
+			display: block
+			margin: -3% 0 3%
+			width: percentage(85/178)
+	form
+		background: #fff
+		border-radius: 4px
+		box-shadow: none
+		overflow: hidden
+		position: relative
+		z-index: 1
+		&:before
+			+stretch(0, false, 0, 0)
+			background-image: repeating-linear-gradient(30deg, rgba($yellow, .2), rgba($yellow, .2) 9px, transparent 9px, transparent 16px)
+			content: ""
+			display: block
+			pointer-events: none
+			width: 6px
+			z-index: 1
+		label
+			color: $gray
+			font: rem(14) $sans
+		.input
+			background: $ice-light
+			border: 1px solid $gray-light
+			border-radius: 4px
+			box-shadow: none
+			color: $gray-dark
+			font: rem(14) $sans
+			padding: .7em
+			transition: background .25s, border .25s
+			&:focus
+				background: #fff
+				border-color: $gray-dark
+	.message,
+	#login_error
+		background: none
+		border: 0 none
+		box-shadow: none
+		color: $gray-dark
+		font: rem(14, 1.5) $sans
+		padding: 0 24px
+		a
+			border-bottom: 2px solid $yellow
+			color: inherit
+			font-weight: bold
+			text-decoration: none
+			transition: color .25s
+			&:hover, &:focus
+				color: $yellow
+	.button-primary
+		background: $yellow
+		border-color: $yellow
+		box-shadow: none
+		font: rem(14) $serif
+		text-shadow: none
+		text-transform: uppercase
+		transition: background .25s, border .25s
+		&:hover
+			background: $blue
+			border-color: $blue
+	#nav a,
+	#backtoblog a,
+	#jetpack-sso-wrap .jetpack-sso-toggle
+		border-bottom: 2px solid $yellow
+		color: $gray
+		font: bold rem(14) $sans
+		transition: color .25s
+		width: auto
+		&:hover, &:focus
+			color: $yellow
+
+	#jetpack-sso-wrap
+		text-align: center
+		.jetpack-sso-toggle + .jetpack-sso-toggle
+			margin-top: rem(10)
+		&__action
+			p
+				text-align: left
+			.jetpack-sso.button
+				align-items: center
+				display: flex
+				height: rem(40)
+				justify-content: center
+
+#jetpack-sso-wrap .jetpack-sso-toggle
+	.login.jetpack-sso &.wpcom
+		display: none
+	.login.jetpack-sso &.default
+		display: inline-block
+	.login.jetpack-sso-form-display &.wpcom
+		display: inline-block
+	.login.jetpack-sso-form-display &.default
+		display: none
+

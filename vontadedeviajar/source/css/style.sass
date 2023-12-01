@@ -1,0 +1,3090 @@
+@import "mixins"
+@import "icons"
+@import "sprite"
+
+//
+
+%container
+	+reset
+	+clearfix
+	box-sizing: border-box
+	+breakpoint($md)
+		margin: 0 auto
+		max-width: rem(map-get($md, max))
+		width: 100%
+	+breakpoint($lg)
+		max-width: rem(map-get($lg, max))
+	+breakpoint($xl)
+		max-width: rem(map-get($xl, max))
+
+//
+
+.grid
+	@extend %container
+	+stretch
+	display: flex
+	flex-wrap: wrap
+	justify-content: center
+	overflow: hidden
+	pointer-events: none
+	position: fixed
+	z-index: 90
+	&__col
+		box-sizing: border-box
+		background: rgba(#f00, .03)
+		background-clip: content-box
+		height: 100%
+		padding: 0 gut($sm)
+		width: col($sm)
+		+breakpoint($md)
+			padding: 0 gut($md)
+			width: col($md)
+		+breakpoint($lg)
+			padding: 0 gut($lg)
+			width: col($lg)
+		+breakpoint($xl)
+			padding: 0 gut($xl)
+			width: col($xl)
+
+//
+
+article, aside, dialog, figcaption, figure,
+footer, header, hgroup, main, nav, section
+	display: block
+
+html, body
+	+reset
+	font-size: $base-font-size
+	height: 100%
+	-webkit-font-smoothing: antialiased
+	-moz-osx-font-smoothing: grayscale
+
+.screen-reader-text,
+.screen-reader-response
+	display: none
+
+.vdv-body
+	background: $ice-light
+	padding-top: rem(60)
+	&.error404
+		background: $ice
+	&.admin-bar
+		@media (max-width: 782px)
+			padding-top: calc(#{rem(60)} - 46px)
+		+breakpoint($xl)
+	&--stuck
+		overflow: hidden
+	+breakpoint($xl)
+		padding-top: rem(200)
+		&.home
+			padding-top: rem(200 + 20)
+
+.vdv
+	&-hr
+		display: none
+
+	&-head
+		background: #fff url(../img/world.jpg)
+		box-shadow: 0 1px 3px rgba(#000, .15)
+		left: 0
+		position: fixed
+		right: 0
+		top: 0
+		z-index: 50
+		&:before
+			+stretch(0, 0, false, 0)
+			background-image: repeating-linear-gradient(-20deg, $yellow, $yellow 12px, transparent 12px, transparent 16px)
+			content: ""
+			display: block
+			height: 4px
+		.admin-bar &
+			margin-top: 32px
+			@media (max-width: 782px)
+				margin-top: 0
+				z-index: 999991
+		+breakpoint($xl)
+			background-size: cover
+			display: flex
+			flex-direction: column
+
+		&__contact
+			+reset
+			display: none
+			+breakpoint($xl)
+				border-bottom: 1px dashed $yellow
+				display: block
+				height: rem(60)
+				order: 1
+				overflow: hidden
+				transition: border .25s, height .25s
+				.vdv-head--small &
+					border-bottom-width: 0
+					height: 0
+
+		&__contact-wrap
+			+reset
+			align-items: center
+			display: flex
+			justify-content: space-between
+			list-style: none
+			margin: 0 auto
+			max-width: rem(map-get($xl, max))
+			height: 100%
+
+		&__shortcut
+			margin: 0 auto 0 gut($xl)
+
+		&__anchor-news
+			align-items: center
+			color: $gray
+			display: flex
+			font: rem(13) $sans
+			text-decoration: none
+			transition: color .25s
+			+icon(mail)
+			&:before
+				font-size: rem(14)
+				margin-right: rem(8)
+			&:hover, &:focus
+				color: $yellow
+
+		&__social
+			align-items: center
+			color: $gray
+			display: flex
+			font: rem(12) $sans
+			margin: 0 gut($xl) 0 0
+			text-transform: uppercase
+			> span
+				align-items: center
+				cursor: default
+				display: flex
+				+icon(arrow, after)
+				&:after
+					color: $gray-light
+					font-size: rem(11)
+					margin: auto rem(25)
+
+		&__social-links
+			+reset
+			display: flex
+			list-style: none
+
+		&__navigation
+			@extend %container
+			align-items: center
+			display: flex
+			height: rem(60)
+			justify-content: space-between
+			order: 2
+			padding-top: 4px
+			+breakpoint($xl)
+				height: rem(140)
+				transition: height .25s, padding .25s
+				.vdv-head--small &
+					height: rem(70)
+					padding-top: 4px
+
+		&__logo
+			+reset
+			background: url(../img/logotype-mobile.svg) left center no-repeat
+			background-size: contain
+			font: 0/0 serif
+			height: rem(38)
+			margin: 0 auto 0 gut($sm)
+			position: relative
+			top: rem(2)
+			width: rem(65)
+			a
+				+stretch
+				display: block
+			+breakpoint($md)
+				margin-left: gut($md)
+			+breakpoint($lg)
+				margin-left: gut($lg)
+			+breakpoint($xl)
+				background-image: url(../img/logotype-full.svg)
+				background-position: right center
+				border-left: rem(92) solid transparent
+				box-sizing: content-box
+				height: auto
+				margin: 0 0 0 gut($xl)
+				transition: border .25s, width .25s
+				width: rem(178)
+				&:before
+					content: ""
+					display: block
+					padding-top: percentage(83/178)
+				span
+					+stretch(0, false, 0, percentage(-92/178))
+					background: url(../img/compass.svg) no-repeat center center
+					background-size: contain
+					display: none
+					margin: -3% 0 3%
+					width: percentage(85/178)
+					+breakpoint($xl)
+						display: block
+					~ span
+						background-image: url(../img/plane.svg)
+						bottom: 25%
+						top: 25%
+				.vdv-head--small &
+					border-left-width: rem(52)
+					width: rem(105)
+
+		&__toggle
+			+reset
+			background: none
+			border: 0 none
+			cursor: pointer
+			margin: 0 gut($sm) 0 auto
+			outline: none
+			span
+				background: $gray
+				border-radius: 1.5px
+				display: block
+				height: rem(3)
+				opacity: 1
+				transform: translateY(0px) rotate(0deg)
+				transition: transform .25s, opacity .25s
+				width: rem(30)
+				+ span
+					margin-top: rem(6)
+				.vdv-head--active &
+					&:nth-child(1)
+						transform: translateY(9px) rotate(45deg)
+					&:nth-child(2)
+						opacity: 0
+					&:nth-child(3)
+						transform: translateY(-9px) rotate(-45deg)
+			+breakpoint($md)
+				margin-right: gut($md)
+			+breakpoint($lg)
+				margin-right: gut($lg)
+			+breakpoint($xl)
+				display: none
+
+	&-nav
+		background: #fff url(../img/world.jpg) left rem(-60)
+		bottom: 0
+		display: none
+		flex-direction: column
+		left: 0
+		position: fixed
+		right: 0
+		top: rem(60)
+		z-index: 999991
+		.admin-bar &
+			top: calc(#{rem(60)} + 32px)
+			@media (max-width: 782px)
+				top: rem(60)
+		.vdv-head--active &
+			display: flex
+		+breakpoint($xl)
+			align-items: center
+			background: none
+			display: flex
+			flex-direction: row
+			margin: 0 gut($xl) 0 auto
+			padding-top: rem(20)
+			position: static
+			transition: padding .25s
+			.vdv-head--small &
+				padding-top: 0
+
+		&__search-form
+			float: right
+			margin: rem(20) gut($sm) 0
+			order: 1
+			+breakpoint($md)
+				margin-left: auto
+				margin-right: auto
+				max-width: rem(map-get($md, max))
+				width: 100%
+			+breakpoint($lg)
+				max-width: rem(map-get($lg, max))
+			+breakpoint($xl)
+				margin: 0
+
+		&__menu
+			+reset
+			list-style: none
+			margin: rem(20) 0
+			order: 2
+			overflow: auto
+			padding: rem(20) gut($sm)
+			+breakpoint($md)
+				margin-left: auto
+				margin-right: auto
+				max-width: rem(map-get($md, max))
+				padding-left: 0
+				padding-right: 0
+				width: 100%
+			+breakpoint($lg)
+				max-width: rem(map-get($lg, max))
+			+breakpoint($xl)
+				margin: 0
+				overflow: visible
+				padding: 0
+
+	&-search-form
+		+breakpoint($xl)
+			order: 3
+
+		&__field
+			display: flex
+			+breakpoint($md)
+				margin-left: gut($md)
+				margin-right: gut($md)
+			+breakpoint($lg)
+				margin-left: gut($lg)
+				margin-right: gut($lg)
+
+		&__label
+			width: calc(100% - #{rem(30)})
+			span
+				display: none
+			+breakpoint($xl)
+				border: 1px solid $gray-light
+				border-radius: 3px
+				overflow: hidden
+				position: relative
+				transition: width .25s
+				width: rem(22)
+				z-index: 1
+				span
+					+stretch(1px, false, 1px, 1px)
+					align-items: center
+					color: $gray
+					cursor: pointer
+					display: flex
+					font: 0/0 serif
+					justify-content: center
+					width: rem(20)
+					+icon(magnifier)
+					&:before
+						font-size: rem(14)
+
+		+breakpoint($xl)
+			&--show &__label
+				width: rem(160)
+				.vdv-widgets &
+					width: 100%
+
+		&__input
+			+reset
+			-webkit-appearance: none
+			appearance: none
+			background: #fff
+			border: 1px solid $gray-light
+			border-right: 0 none
+			color: $gray-dark
+			display: block
+			font: rem(14) $sans
+			height: rem(30)
+			padding: 0 1em
+			width: 100%
+			+breakpoint($xl)
+				border: 0 none
+				font-size: rem(13)
+				height: rem(22)
+				outline: none
+				padding: 0 .5em 0 rem(20)
+
+		&__button
+			+reset
+			align-items: center
+			background: #fff
+			border: 1px solid $gray-light
+			border-left: 0 none
+			color: $gray
+			display: flex
+			font: 0/0 serif
+			height: rem(30)
+			justify-content: center
+			width: rem(30)
+			+icon(magnifier)
+			&:before
+				font-size: rem(18)
+			+breakpoint($xl)
+				display: none
+
+	&-main
+		@extend %container
+
+	&-hero
+		color: $gray
+		margin: 0 0 rem(40)
+		width: 100%
+		+breakpoint($md)
+			color: #fff
+			left: 50%
+			position: relative
+			transform: translateX(-50%)
+			width: 100vw
+		+breakpoint($lg)
+			margin-bottom: rem(60)
+			.vdv-content &
+				left: auto
+				margin: 0 auto
+				transform: none
+				width: 100% - gut($lg, 8) * 2
+		+breakpoint($xl)
+			left: 0
+			margin: 0 auto rem(60)
+			transform: none
+			width: 100% - gut($xl) * 2
+			.vdv-content &
+				margin-left: gut($xl, 10)
+				width: col(10, 9)
+
+		&__body
+			+breakpoint($md)
+				+stretch(false, 0, percentage(50/394), 0)
+				margin: 0 auto
+				max-width: rem(map-get($md, max))
+				z-index: 2
+			+breakpoint($lg)
+				bottom: percentage(50/524)
+				max-width: rem(map-get($lg, max))
+				.vdv-content &
+					left: 5%
+					right: 5%
+			+breakpoint($xl)
+				left: col($xl)
+				right: col($xl, 6)
+				max-width: none
+				.vdv-content &
+					left: col(9, .5)
+					right: col(9, 2)
+
+		&__thumb
+			background-color: $gray-light
+			background-position: center center
+			background-size: cover
+			display: block
+			overflow: hidden
+			position: relative
+			z-index: 1
+			&:before
+				background: inherit
+				content: ""
+				display: block
+				padding-top: percentage(620/1210)
+			+breakpoint($md)
+				&:after
+					+stretch
+					background-image: linear-gradient(0deg, rgba(#000, .7) 0, rgba(#000, .9) 0, rgba(#000, .1) 50%, transparent 65%, transparent)
+					content: ""
+					display: block
+					opacity: .8
+					pointer-events: none
+			+breakpoint($lg)
+				.vdv-content &
+					border-radius: 4px
+					&:before
+						padding-top: percentage(3/5)
+			+breakpoint($xl)
+				border-radius: 4px
+				.vdv-content &:before
+					padding-top: percentage(620/1210)
+
+		&__tag
+			background: $yellow
+			border-radius: 3px
+			color: #fff
+			display: inline-block
+			font: rem(14, 2.2) $serif
+			margin: rem(-20) gut($sm) 0
+			padding: 0 1.2em
+			position: absolute
+			text-decoration: none
+			text-transform: uppercase
+			transform: translateY(-100%)
+			transition: background .25s
+			z-index: 3
+			&:hover, &:focus
+				background: $blue-light
+			+breakpoint($md)
+				margin: 0 gut($md)
+				position: static
+				transform: none
+			+breakpoint($lg)
+				.vdv-content &
+					margin: 0
+			+breakpoint($xl)
+				font-size: rem(16)
+				line-height: 2em
+				margin: 0
+
+		&__title
+			+reset
+			font: bold rem(20, 1.2) $sans
+			margin: 0 gut($sm)
+			padding: rem(20) 0 rem(10)
+			a
+				color: inherit
+				display: block
+				text-decoration: none
+				transition: color .25s
+				&:hover, &:focus
+					color: $yellow
+			+breakpoint($md)
+				font-size: rem(30)
+				margin: 0 gut($md)
+			+breakpoint($lg)
+				padding: rem(30) 0 rem(20)
+				.vdv-content &
+					margin: 0
+			+breakpoint($xl)
+				font-size: rem(48)
+				margin: 0
+				.vdv-content &
+					font-size: rem(30)
+
+		&__meta
+			align-items: center
+			display: inline-flex
+			font: rem(14) $sans
+			margin: 0 gut($sm)
+			text-transform: uppercase
+			+breakpoint($md)
+				margin: 0 gut($md)
+			+breakpoint($lg)
+				.vdv-content &
+					margin: 0
+			+breakpoint($xl)
+				margin: 0
+
+	&-features
+		display: flex
+		flex-wrap: wrap
+		+breakpoint($lg)
+			+ .vdv-special,
+			+ .vdv-ad
+				margin-top: rem(60)
+
+		&__entry
+			+clearfix
+			color: $gray
+			margin: 0 0 rem(40)
+			width: 100%
+			+breakpoint($xl)
+				margin-bottom: rem(60)
+
+		&__thumb
+			@extend .vdv-hero__thumb
+			+breakpoint($md)
+				border-radius: 4px
+				margin-bottom: rem(20)
+				&:after
+					display: none
+				&:before
+					transition: transform .25s
+				&:hover:before
+					transform: scale(1.2)
+			&--alt
+				background: none
+				overflow: visible
+				&:before
+					display: none
+				a
+					@extend .vdv-hero__thumb
+					&:before
+						transition: transform .25s
+					&:hover:before
+						transform: scale(1.2)
+
+		&__title,
+		&__content
+			+reset
+
+		&__entry--primary
+			+breakpoint($md)
+				margin: 0 gut($md) rem(40)
+				width: col($md, 5) - gut($md) * 2
+			+breakpoint($lg)
+				margin: rem(40) gut($lg, 8) 0
+				width: col(8, 4) - gut($lg, 8) * 2
+				.vdv-content.vdv-features &
+					margin-top: 0
+			+breakpoint($xl)
+				margin: rem(60) gut($xl, 10) 0
+				width: col(10, 4.5) - gut($xl, 10)
+
+		&__entry--primary &__tag,
+		&__entry--tertiary &__tag,
+		&__entry--senary &__tag
+			@extend .vdv-hero__tag
+			+breakpoint($md)
+				background: none
+				color: $yellow
+				letter-spacing: .07em
+				line-height: normal
+				margin: 0
+				padding: 0
+				transition: color .25s
+				&:hover, &:focus
+					background: none
+					color: $blue
+
+		&__entry--primary &__title,
+		&__entry--tertiary &__title,
+		&__entry--senary &__title
+			@extend .vdv-hero__title
+			+breakpoint($md)
+				font: bold rem(20, 1.2) $sans
+				margin: rem(10) 0
+				padding: 0
+			+breakpoint($lg)
+				.vdv-content &
+					margin: rem(10) 0
+			+breakpoint($xl)
+				.vdv-content &
+					font-size: rem(20)
+					margin: rem(10) 0 rem(15)
+
+		&__entry--primary &__meta,
+		&__entry--tertiary &__meta,
+		&__entry--senary &__meta
+			@extend .vdv-hero__meta
+			+breakpoint($md)
+				margin: 0
+
+		&__entry--secondary,
+		&__entry--tertiary + &__entry,
+		&__entry--quinary
+			color: $gray
+			margin: 0 0 rem(40) gut($sm)
+			width: col($sm, 2) - gut($sm) * 1.5
+			+breakpoint($md)
+				margin: 0 gut($md) rem(40)
+				width: col($md, 5) - gut($md) * 2
+			+breakpoint($lg)
+				border-top: 1px solid $gray-light
+				margin: rem(40) 0 0
+				padding: rem(30) 0 0
+				width: 50% - gut($lg, 8)
+				&:nth-child(odd)
+					margin-left: gut($lg, 8)
+			+breakpoint($xl)
+				width: col(10, 4.5)
+				&:nth-child(odd)
+					margin-left: gut($xl, 10)
+
+		&__entry--secondary &__thumb,
+		&__entry--tertiary + &__entry &__thumb
+			border-radius: 4px
+			margin: 0 0 rem(20)
+			+breakpoint($lg)
+				clear: left
+				float: left
+				margin: 0
+				width: calc(50% - #{map-get($lg, gut) * 1px})
+				&:before
+					padding-top: percentage(3/5)
+			+breakpoint($xl)
+				width: calc(50% - #{map-get($xl, gut) * 1px})
+				&:before
+					padding-top: percentage(620/1210)
+
+		&__entry--secondary &__tag,
+		&__entry--tertiary + &__entry &__tag
+			background: none
+			color: $yellow
+			display: inline-block
+			font: rem(13, 1) $serif
+			letter-spacing: .07em
+			margin: 0 0 rem(20)
+			padding: 0
+			position: static
+			text-decoration: none
+			text-transform: uppercase
+			transform: none
+			transition: color .25s
+			.vdv-post__related &
+				display: none
+			&:hover, &:focus
+				color: $blue
+			+breakpoint($md)
+				font-size: rem(14)
+			+breakpoint($lg)
+				float: left
+
+		&__entry--secondary &__content
+			+reset
+			+breakpoint($lg)
+				float: right
+				padding-right: map-get($lg, gut) * 1px
+				width: 50%
+			+breakpoint($xl)
+				padding-right: map-get($xl, gut) * 1px
+
+		&__entry--secondary &__title,
+		&__entry--tertiary + &__entry &__title,
+		&__entry--quinary &__title
+			+reset
+			color: $gray
+			font: bold rem(16) $sans
+			margin: 0 0 rem(10)
+			padding: 0
+			a
+				color: inherit
+				text-decoration: none
+				transition: color .25s
+				&:hover, &:focus
+					color: $yellow
+			+breakpoint($md)
+				font-size: rem(20)
+			+breakpoint($lg)
+				display: -webkit-box
+				font: bold rem(14, 1.2) $sans
+				max-height: 1.2em * 3
+				overflow: hidden
+				-webkit-box-orient: vertical
+				-webkit-line-clamp: 3
+
+		&__entry--secondary &__meta,
+		&__entry--tertiary + &__entry &__meta,
+		&__entry--quinary &__meta
+			align-items: center
+			display: inline-flex
+			font: rem(12) $sans
+			margin: 0
+			text-transform: uppercase
+			+breakpoint($md)
+				font-size: rem(14)
+			+breakpoint($lg)
+				font-size: rem(12)
+
+		&__entry--tertiary
+			+breakpoint($md)
+				margin-left: auto
+				margin-right: auto
+				width: 100% - gut($md) * 2
+
+		&__entry--tertiary,
+		&__entry--tertiary + &__entry,
+		&__entry--tertiary + &__entry:nth-child(odd)
+			+breakpoint($lg)
+				border: 0 none
+				margin: 0 auto
+				padding: 0
+				width: 100% - gut($lg, 5) * 2
+			+breakpoint($xl)
+				margin-left: col(6) - gut($xl, 6)
+				width: col(6, 5)
+
+		&__entry--tertiary + &__entry,
+		&__entry--tertiary + &__entry:nth-child(odd)
+			+breakpoint($lg)
+				margin: rem(20) auto 0
+			+breakpoint($xl)
+				margin-left: col(6) - gut($xl, 6)
+				margin-top: rem(30)
+
+		&__entry--tertiary &__thumb,
+		&__entry--tertiary + &__entry &__thumb
+			+breakpoint($lg)
+				float: left
+				margin: 0
+				width: 50% - gut($lg, 5)
+				&:before
+					padding-top: percentage(3/5)
+			+breakpoint($xl)
+				width: 50% - gut($xl, 6)
+				&:before
+					padding-top: percentage(620/1210)
+
+		&__entry--tertiary + &__entry &__tag
+			margin: 0 0 rem(10)
+
+		&__entry--tertiary &__content
+			+breakpoint($lg)
+				float: right
+				width: 50%
+
+		&__entry--tertiary &__tag,
+		&__entry--tertiary + &__entry &__tag,
+		&__entry--tertiary &__meta,
+		&__entry--tertiary + &__entry &__meta
+			+breakpoint($lg)
+				font-size: rem(12)
+
+		&__entry--tertiary &__title,
+		&__entry--tertiary + &__entry &__title
+			+breakpoint($lg)
+				clear: left
+				font: bold rem(14) $sans
+				margin: rem(5) 0 rem(10)
+
+		&__entry--quaternary
+			+clearfix
+			color: $gray
+			margin: 0
+			width: 100%
+			&:last-child
+				margin-bottom: rem(40)
+			+breakpoint($md)
+				margin: 0 gut($md) rem(40)
+				width: 100% / 3 - gut($md) * 2
+			+breakpoint($lg)
+				margin: 0 gut($lg)
+				width: 100% / 3 - gut($lg) * 2
+			+breakpoint($xl)
+				margin: 0 gut($xl)
+				width: 100% / 3 - gut($xl) * 2
+
+		&__entry--quaternary + &__entry
+			margin-top: rem(20)
+			+breakpoint($md)
+				margin-top: 0
+
+		&__entry--quaternary &__content
+			margin: 0 gut($sm) 0 (col($sm, 2))
+			+breakpoint($md)
+				margin: 0
+			+breakpoint($lg)
+				margin: 0 0 0 50%
+
+		&__entry--quaternary &__thumb
+			float: left
+			margin: 0 0 0 gut($sm)
+			position: relative
+			width: (col($sm, 2) - gut($sm) * 3)
+			a
+				border-radius: 4px
+				display: block
+				overflow: hidden
+				position: relative
+				z-index: 1
+			.avatar
+				+stretch(false, 0, 0, false)
+				border-radius: 50%
+				display: block
+				height: rem(30)
+				pointer-events: none
+				transform: translate(40%, 40%)
+				width: rem(30)
+				z-index: 2
+			+breakpoint($md)
+				float: none
+				margin: 0 0 rem(20)
+				width: 100%
+				.avatar
+					height: rem(50)
+					left: 0
+					right: auto
+					transform: translate(-20%, 20%)
+					width: rem(50)
+			+breakpoint($lg)
+				float: left
+				width: calc(50% - #{map-get($lg, gut) * 1px})
+				a:after
+					display: none
+			+breakpoint($xl)
+				width: calc(50% - #{map-get($xl, gut) * 1px})
+				.avatar
+					left: auto
+					right: 0
+					transform: translate(30%, 30%)
+
+		&__entry--quaternary &__title
+			+reset
+			font: bold rem(14) $sans
+			margin: 0 0 rem(10)
+			a
+				color: inherit
+				text-decoration: none
+				transition: color .25s
+				&:hover, &:focus
+					color: $yellow
+			+breakpoint($md)
+				font-size: rem(16)
+			+breakpoint($lg)
+				font-size: rem(14)
+
+		&__entry--quaternary &__meta,
+		&__entry--quaternary a[rel="author"]
+			color: inherit
+			font: rem(12) $sans
+			text-decoration: none
+			text-transform: uppercase
+
+		&__entry--quaternary a[rel="author"]
+			transition: color .25s
+			&:hover, &:focus
+				color: $yellow
+
+		&__entry--quinary,
+		&__entry--quinary:nth-child(odd)
+			margin-bottom: 0
+			margin-top: rem(20)
+			+breakpoint($lg)
+				border: 0 none
+				margin-left: gut($lg, 7)
+				padding: 0
+				width: 50% - gut($lg, 7) * 1.5
+				.vdv-post__related--alt &,
+				.vdv-post__related--alt &:nth-child(odd)
+					margin-left: gut($lg)
+					width: 25% - gut($lg) * 1.25
+			+breakpoint($xl)
+				margin-left: gut($xl, 8)
+				width: 50% - gut($xl, 8) * 1.5
+				.vdv-post__related--alt &,
+				.vdv-post__related--alt &:nth-child(odd)
+					margin-left: gut($xl)
+					width: 25% - gut($xl) * 1.25
+
+		&__entry--quinary &__thumb
+			border-radius: 4px
+			margin: 0 0 rem(10)
+			position: relative
+			z-index: 1
+
+		+breakpoint($md)
+			&__entry--senary
+				align-items: flex-start
+				display: flex
+			&__entry--senary &__thumb,
+			&__entry--senary &__content
+				margin: 0 gut($md)
+				width: col($md, 5) - gut($md) * 2
+		+breakpoint($lg)
+			&__entry--senary &__thumb
+				margin: 0 gut($lg, 8)
+				width: col(8, 4) - gut($lg, 8) * 2
+			&__entry--senary &__content
+				margin: 0 gut($lg, 8)
+				width: col(8, 4) - gut($lg, 8) * 2
+		+breakpoint($xl)
+			&__entry--senary &__thumb
+				margin: 0 gut($xl, 10)
+				width: col(10, 4) - gut($xl, 10) * 2
+			&__entry--senary &__content
+				margin: 0 gut($xl, 10)
+				width: col(10, 5)
+
+	&-content
+		+reset
+		+breakpoint($md)
+			&:last-of-type
+				float: left
+				width: col($md, 6)
+		+breakpoint($lg)
+			box-shadow: 1px 0 0 0 $gray-lighter
+			clear: both
+			float: left
+			margin-bottom: rem(60)
+			padding-right: col($lg, .5)
+			width: col($lg, 8.5)
+			&--alt
+				box-shadow: none
+				float: none
+				padding: 0
+				width: 100%
+		+breakpoint($xl)
+			padding-right: 0
+			width: col($xl, 10)
+			&--alt
+				width: 100%
+
+		&__heading
+			+reset
+			color: $yellow
+			font: rem(42, 1) $serif
+			margin: 0 gut($sm) rem(20)
+			a
+				color: inherit
+				text-decoration: none
+				transition: color .25s
+				&:hover, &:focus
+					color: $blue
+			&--alt
+				color: $gray-lighter
+				font-size: rem(76)
+				position: relative
+				text-transform: uppercase
+				span
+					+stretch(false, false, -.2em, 0)
+					color: $yellow
+					display: block
+					font-size: rem(38)
+					letter-spacing: 0
+					line-height: 1em
+					text-transform: lowercase
+			+breakpoint($md)
+				margin: 0 gut($md) rem(25)
+			+breakpoint($lg)
+				font-size: rem(46)
+				margin: 0 gut($lg, 8) rem(25)
+				&--alt
+					font-size: rem(96)
+				.vdv-content--alt &
+					margin-left: gut($lg)
+					margin-right: gut($lg)
+			+breakpoint($xl)
+				font-size: rem(56)
+				margin: 0 gut($xl, 10) rem(40)
+				&--alt
+					font-size: rem(126)
+				.vdv-content--alt &
+					margin-left: gut($xl)
+					margin-right: gut($xl)
+
+	&-sidebar
+		@extend %container
+
+		&__heading
+			@extend .vdv-content__heading
+			&--alt
+				@extend .vdv-content__heading--alt
+			+breakpoint($lg)
+				margin-left: gut($lg, 5)
+				margin-right: gut($lg, 5)
+			+breakpoint($xl)
+				margin-left: col(6) - gut($xl, 6)
+				margin-right: gut($xl, 6)
+
+		+breakpoint($md)
+			&:last-of-type
+				margin-left: auto
+				margin-right: auto
+				width: col($md, 6)
+			&:last-of-type &__heading
+				margin-left: gut($md, 6)
+				margin-right: gut($md, 6)
+		+breakpoint($lg)
+			box-shadow: inset 1px 0 0 0 $gray-lighter
+			float: right
+			margin-bottom: rem(60)
+			padding-left: col($lg, .5)
+			width: col($lg, 5.5)
+			&:last-of-type
+				margin-left: 0
+				margin-right: 0
+				width: col($lg, 5.5)
+			&:last-of-type &__heading
+				margin-left: gut($lg, 5)
+				margin-right: gut($lg, 5)
+		+breakpoint($xl)
+			&, &:last-of-type
+				padding-left: 0
+				width: col($xl, 6)
+			&:last-of-type &__heading
+				margin-left: col(6) - gut($xl, 6)
+				margin-right: gut($xl, 6)
+
+	&-top
+		+reset
+		color: $gray
+		list-style: none
+		margin: 0 0 rem(40)
+		+breakpoint($md)
+			display: flex
+			.vdv-widgets &
+				margin-left: flood($md)
+				margin-right: flood($md)
+		+breakpoint($lg)
+			display: block
+			.vdv-widgets &
+				margin-left: 0
+				margin-right: 0
+
+		&__item
+			position: relative
+			&:before
+				@extend .vdv-sprite
+				+stretch(false, 0, rem(-10), false)
+				content: ""
+				z-index: 1
+			&:nth-child(1):before
+				+sprite($number-1)
+			&:nth-child(2):before
+				+sprite($number-2)
+			&:nth-child(3):before
+				+sprite($number-3)
+			.vdv-widgets &
+				margin-left: flood($sm)
+				margin-right: flood($sm)
+			+breakpoint($md)
+				margin: 0 gut($md) rem(40)
+				width: 100% / 3 - gut($md) * 2
+				&:before
+					bottom: rem(-20)
+				.vdv-widgets &
+					margin-left: gut($md)
+					margin-right: gut($md)
+			+breakpoint($lg)
+				margin: 0 auto
+				width: 100% - gut($lg, 5) * 2
+				&:before
+					bottom: rem(-10)
+				.vdv-widgets &
+					margin-left: 0
+					margin-right: 0
+					width: 100%
+			+breakpoint($xl)
+				margin: 0 0 0 (col(6) - gut($xl, 6))
+				width: col(6, 5)
+				&:before
+					bottom: rem(-15)
+
+		&__item + &__item
+			margin-top: rem(20)
+			+breakpoint($md)
+				margin-top: 0
+			+breakpoint($lg)
+				margin-top: rem(20)
+			+breakpoint($xl)
+				margin-top: rem(30)
+
+		&__link
+			+clearfix
+			color: inherit
+			display: block
+			position: relative
+			text-decoration: none
+			transition: color .25s
+			z-index: 2
+			&:hover, &:focus
+				color: $yellow
+
+		&__thumb
+			@extend .vdv-hero__thumb
+			border-radius: 4px
+			float: left
+			margin: 0 gut($sm)
+			width: col($sm, 2) - gut($sm)
+			&:before
+				transition: transform .25s
+			&:hover:before
+				transform: scale(1.2)
+			+breakpoint($md)
+				float: none
+				margin: 0 0 rem(20)
+				width: 100%
+			+breakpoint($lg)
+				float: left
+				margin-bottom: 0
+				width: calc(50% - #{map-get($lg, gut) * 1px})
+				&:after
+					display: none
+			+breakpoint($xl)
+				width: calc(50% - #{map-get($xl, gut) * 1px})
+
+		&__title
+			+reset
+			display: block
+			font: bold rem(14) $sans
+			margin: 0 gut($sm) 0 (col($sm, 2) + gut($sm))
+			+breakpoint($md)
+				font: bold rem(16, 1.375) $sans
+				margin: 0
+			+breakpoint($lg)
+				font: bold rem(14) $sans
+				margin-left: 50%
+			+breakpoint($xl)
+				font: bold rem(16, 1.375) $sans
+
+	&-destinations
+		+reset
+		color: $gray
+		display: flex
+		flex-wrap: wrap
+		list-style: none
+		margin: rem(-20) 0 rem(40)
+		+breakpoint($lg)
+			margin-bottom: 0
+		+breakpoint($xl)
+			margin-top: rem(-30)
+
+		&__item
+			@extend .vdv-features__entry--secondary
+			margin-bottom: 0
+			margin-top: rem(20)
+			a
+				background: #fff
+				border-radius: 4px
+				color: inherit
+				display: block
+				overflow: hidden
+				position: relative
+				text-decoration: none
+				transition: color .25s
+				z-index: 1
+				&:hover, &:focus
+					color: $yellow
+					.vdv-destinations__thumb:before
+						transform: scale(1.2)
+			+breakpoint($md)
+				margin-left: gut($md)
+				margin-right: gut($md)
+				width: 100% / 3 - gut($md) * 2
+			+breakpoint($lg)
+				&, &:nth-child(odd)
+					border: 0 none
+					margin: rem(20) gut($lg, 8) 0
+					padding: 0
+					width: 100% / 3 - gut($lg, 8) * 2
+			+breakpoint($xl)
+				&, &:nth-child(odd)
+					margin: rem(30) gut($xl, 10) 0
+					width: col(10, 3) - gut($xl, 10) * 2 + gut($xl, 10) * 2/3
+
+		&__thumb
+			@extend .vdv-hero__thumb
+			&:before
+				transition: transform .25s
+			+breakpoint($lg)
+				&:after
+					display: none
+
+		&__title
+			+reset
+			display: block
+			font: bold rem(14) $sans
+			padding: rem(15)
+			+breakpoint($md)
+				font-size: rem(16)
+				padding: rem(20)
+
+	&-special
+		background: #fff
+		color: $gray
+		margin: 0 0 rem(40)
+		padding: 0 0 rem(20)
+		position: relative
+		z-index: 1
+		+breakpoint($md)
+			border-radius: 4px
+			margin: 0 gut($md) rem(40)
+		+breakpoint($lg)
+			margin: 0 gut($lg, 5)
+		+breakpoint($xl)
+			margin: 0 gut($xl, 6) 0 (col(6) - gut($xl, 6))
+
+		a
+			color: inherit
+			text-decoration: none
+			transition: color .25s
+			&:hover, &:focus
+				color: $yellow
+
+		&--alt
+			&:before
+				+stretch(rem(40), false, 0, 0)
+				background-image: repeating-linear-gradient(30deg, rgba($yellow, .2), rgba($yellow, .2) 9px, transparent 9px, transparent 16px)
+				content: ""
+				display: block
+				pointer-events: none
+				width: rem(6)
+				z-index: 1
+			&:after
+				@extend .vdv-sprite
+				+sprite($stamp)
+				+stretch(false, rem(20), 40%, false)
+				content: ""
+				pointer-events: none
+				z-index: 1
+
+		&__heading
+			+reset
+			background: $yellow
+			color: #fff
+			font: rem(21, rem(40)) $serif
+			padding: 0 (gut($sm) * 2)
+			text-transform: uppercase
+			+breakpoint($md)
+				border-radius: 4px 4px 0 0
+				padding: 0 (gut($md) * 2)
+			+breakpoint($lg)
+				padding: 0 (map-get($lg, gut) * 2px)
+			+breakpoint($xl)
+				padding: 0 (map-get($xl, gut) * 2px)
+
+		&__thumb
+			display: block
+			height: auto
+			width: 100%
+
+		&__title
+			+reset
+			font: bold rem(18, 1.3) $sans
+			margin: rem(20) (gut($sm) * 2) rem(10)
+			+breakpoint($md)
+				margin-left: gut($md) * 2
+				margin-right: gut($md) * 2
+			+breakpoint($lg)
+				margin-left: map-get($lg, gut) * 2px
+				margin-right: map-get($lg, gut) * 2px
+			+breakpoint($xl)
+				margin-left: map-get($xl, gut) * 2px
+				margin-right: map-get($xl, gut) * 2px
+
+		&__meta
+			align-items: center
+			display: inline-flex
+			font: rem(12) $sans
+			margin: 0 (gut($sm) * 2)
+			text-transform: uppercase
+			+breakpoint($md)
+				font-size: rem(14)
+				margin-left: gut($md) * 2
+				margin-right: gut($md) * 2
+			+breakpoint($lg)
+				margin-left: map-get($lg, gut) * 2px
+				margin-right: map-get($lg, gut) * 2px
+			+breakpoint($xl)
+				margin-left: map-get($xl, gut) * 2px
+				margin-right: map-get($xl, gut) * 2px
+
+		&__tips
+			border-bottom: 1px dashed $yellow
+			margin: rem(20) (gut($sm) * 2) 0
+			padding: 0 0 rem(20)
+			position: relative
+			z-index: 2
+			+breakpoint($md)
+				margin-left: gut($md) * 2
+				margin-right: gut($md) * 2
+			+breakpoint($lg)
+				margin-left: map-get($lg, gut) * 2px
+				margin-right: map-get($lg, gut) * 2px
+			+breakpoint($xl)
+				margin-left: map-get($xl, gut) * 2px
+				margin-right: map-get($xl, gut) * 2px
+
+		&__subheading
+			+reset
+			color: $yellow
+			font: rem(24) $serif
+			margin: 0 0 rem(10)
+			+breakpoint($md)
+				font-size: rem(36)
+
+		&__name
+			+reset
+			font: rem(20, 1.1) $serif
+			margin: 0 0 rem(10)
+			strong
+				font: inherit
+			+breakpoint($md)
+				font-size: rem(22)
+
+		&__bio
+			+reset
+			font: rem(14) $sans
+
+		&__avatar
+			border-radius: 50%
+			float: right
+			height: rem(70)
+			transform: translateY(-25%)
+			width: rem(70)
+			+breakpoint($md)
+				height: rem(95)
+				transform: translateY(-35%)
+				width: rem(95)
+			+breakpoint($lg)
+				height: rem(70)
+				transform: translateY(-5%)
+				width: rem(70)
+
+	&-loop,
+	&-video
+		+reset
+		margin: 0 0 rem(40)
+		position: relative
+		width: 100%
+		+breakpoint($md)
+			margin: 0 auto rem(40)
+			width: 100% - gut($md) * 2
+		+breakpoint($lg)
+			margin: 0 auto
+			width: 100% - gut($lg, 5) * 2
+		+breakpoint($xl)
+			margin: 0 0 0 (col(6) - gut($xl, 6))
+			width: col(6, 5)
+
+	&-loop
+		border-radius: 4px
+		color: #fff
+		font: rem(14) $sans
+		overflow: hidden
+		z-index: 1
+		&:before
+			+stretch
+			background-image: linear-gradient(0deg, rgba(#000, .7) 0, rgba(#000, .9) 0, rgba(#000, .1) 50%, transparent 65%, transparent)
+			content: ""
+			display: block
+			pointer-events: none
+			z-index: 2
+		a
+			display: block
+			position: relative
+			z-index: 1
+		img
+			display: block
+			height: auto
+			width: 100%
+
+		&__caption
+			+reset
+			+stretch(false, percentage(30/388), 1em, percentage(30/388))
+			pointer-events: none
+			z-index: 3
+
+	&-video
+		&:before
+			content: ""
+			display: block
+			padding-top: percentage(9/16)
+		iframe, object, embed, video
+			+stretch(0, false, false, 0)
+			display: block
+			height: 100%
+			width: 100%
+
+	&-instagram
+		+reset
+		background: #fff
+		border-radius: 4px
+		color: $gray
+		margin: 0 gut($sm) rem(40)
+		overflow: hidden
+		position: relative
+		z-index: 1
+		+breakpoint($md)
+			margin-left: gut($md, 6)
+			margin-right: gut($md, 6)
+		+breakpoint($lg)
+			margin: 0 gut($lg, 5)
+		+breakpoint($xl)
+			margin-left: col(6) - gut($xl, 6)
+			margin-right: gut($xl, 6)
+		a
+			color: inherit
+			text-decoration: none
+			transition: color .25s
+			&:hover, &:focus
+				color: $yellow
+		img
+			display: block
+			height: auto
+			width: 100%
+
+		&__caption
+			@extend .vdv-destinations__title
+
+	&-keep-in-touch
+		@extend %container
+		background: $blue
+		color: #fff
+		margin: 0 auto rem(40)
+		padding: rem(20) 0
+		+breakpoint($md)
+			background: none
+			display: flex
+		+breakpoint($lg)
+			margin-bottom: rem(60)
+			padding: 0
+
+		&__social
+			+reset
+			display: flex
+			justify-content: center
+			list-style: none
+			+breakpoint($md)
+				align-items: center
+				background: $blue
+				border-radius: 0 4px 4px 0
+				flex-grow: 1
+				margin: 0 gut($md) 0 0
+			+breakpoint($lg)
+				margin-right: gut($lg)
+			+breakpoint($xl)
+				margin-right: gut($xl)
+
+	&-newsletter
+		margin: 0 (gut($sm) * 2) rem(20)
+		+breakpoint($md)
+			background: $blue
+			border-radius: 4px 0 0 4px
+			flex-grow: 1
+			margin: 0 0 0 gut($md)
+			padding: rem(15) 0 rem(15) rem(15)
+			.vdv-footer &
+				background: none
+				margin: 0 auto
+				padding: 0
+				max-width: rem(map-get($md, max))
+		+breakpoint($lg)
+			margin-left: gut($lg)
+			width: 31.4%
+			.vdv-footer &
+				margin: 0 auto rem(40)
+				max-width: rem(map-get($lg, max))
+				width: 100%
+		+breakpoint($xl)
+			margin-left: gut($xl)
+			width: 30.8%
+			.vdv-footer &
+				max-width: rem(map-get($xl, max))
+
+		&__wrap
+			+reset
+			border: 0 none
+			+breakpoint($md)
+				margin: 0 (col($md) + gut($md))
+			+breakpoint($lg)
+				margin: 0 (col($lg) * 2 + gut($lg))
+			+breakpoint($xl)
+				margin: 0
+				.vdv-footer &
+					margin: 0 (col($xl, 4) + gut($xl))
+
+		&__heading
+			display: none
+
+		&__body
+			display: flex
+
+		&__input
+			+reset
+			-webkit-appearance: none
+			appearance: none
+			border: 0 none
+			border-radius: 4px 0 0 4px
+			flex-grow: 7
+			font: rem(12) $sans
+			height: rem(44)
+			padding: rem(15)
+			&::placeholder
+				text-transform: lowercase
+
+		&__button
+			+reset
+			background: $blue-light
+			border: 0 none
+			border-radius: 0 4px 4px 0
+			color: #fff
+			cursor: pointer
+			flex-grow: 3
+			font: 0/0 serif
+			transition: background .25s
+			&:before
+				content: "››"
+				display: inline-block
+				font: rem(22) $sans
+				transform: translateY(-.05em)
+			&:hover
+				background: $gray-darker
+			+breakpoint($lg)
+				font: rem(14) $serif
+				letter-spacing: .07em
+				text-transform: uppercase
+				&:before
+					display: none
+
+	&-foot
+		background: $ice
+		clear: both
+
+		&__partners
+			align-items: center
+			display: flex
+			flex-direction: column
+			justify-content: center
+			padding: rem(40) 0 rem(50)
+			+breakpoint($lg)
+				padding: rem(60) 0 rem(70)
+
+		&__heading
+			+reset
+			color: $gray
+			font: rem(14) $serif
+			margin: 0 auto rem(20)
+			text-align: center
+			text-transform: uppercase
+
+		&__logos
+			+reset
+			align-items: center
+			display: flex
+			justify-content: center
+			a
+				display: block
+				margin: 0 rem(10)
+			img
+				display: block
+				height: rem(70)
+				margin: 0 rem(10)
+				width: rem(70)
+			a img
+				margin: 0
+			div,
+			.widgettitle,
+			.wp-caption-text
+				display: none
+			.vdv-widget--widget_media_image
+				display: inline-block
+				transition: opacity .25s
+			.wp-caption
+				+reset
+				width: auto !important
+			&:hover div
+				opacity: .5
+				&:hover
+					opacity: 1
+
+	&-belief
+		background-color: $yellow-dark
+		background-image: linear-gradient(-45deg, transparent, transparent 3px, rgba(#fff, .15) 3px, rgba(#fff, .15) 4px, transparent 4px, transparent)
+		background-size: 10px 10px
+		overflow: hidden
+		padding: rem(40) 0
+		position: relative
+		&:before
+			@extend .vdv-sprite
+			+sprite($sea-card)
+			+stretch(50%, false, false, 50%)
+			content: ""
+			pointer-events: none
+			transform: translate(-50%, -50%)
+			z-index: 1
+		&:after
+			+stretch(0, 0, false, 0)
+			background-image: repeating-linear-gradient(-20deg, rgba(#fff, .4), rgba(#fff, .4) 12px, transparent 12px, transparent 16px)
+			content: ""
+			display: block
+			height: rem(5)
+			z-index: 2
+		+breakpoint($lg)
+			padding: rem(60) 0
+
+		&__heading
+			+reset
+			color: $yellow-light
+			font: rem(28, .8) $serif
+			margin: 0 auto rem(40)
+			position: relative
+			text-align: center
+			text-transform: lowercase
+			z-index: 3
+			span
+				color: #fff
+				display: block
+				text-transform: uppercase
+			+breakpoint($lg)
+				font-size: rem(36)
+
+		&__wrap
+			+reset
+			counter-reset: steps
+			list-style: none
+			margin: 0 auto
+			max-width: rem(350)
+			+breakpoint($lg)
+				display: flex
+				max-width: rem(map-get($lg, max))
+			+breakpoint($xl)
+				max-width: rem(map-get($xl, max))
+
+		&__step
+			+reset
+			align-items: center
+			color: #fff
+			counter-increment: steps
+			display: flex
+			font: rem(14, 1.375) $sans
+			padding-left: rem(80)
+			position: relative
+			& + &
+				margin-top: rem(20)
+			&:before
+				+reset
+				@extend .vdv-sprite
+				+sprite($compass, flex)
+				+stretch(50%, false, false, 0)
+				align-items: center
+				content: "0" counter(steps)
+				flex-grow: 1
+				font: rem(20, 1) $serif
+				justify-content: center
+				padding-bottom: 1%
+				transform: translateY(-50%)
+			+breakpoint($lg)
+				display: block
+				font-size: rem(16)
+				margin: 0 auto
+				padding: 0
+				text-align: center
+				width: 100% / 3 - gut($lg) * 4
+				& + &
+					margin-top: 0
+				&:before
+					margin: 0 auto rem(20)
+					position: static
+					transform: none
+			+breakpoint($xl)
+				width: 100% / 3 - gut($xl) * 6
+
+	&-footer
+		background: $gray
+		color: #fff
+		padding: rem(40) 0
+
+		&__menu
+			+reset
+			font: rem(14) $serif
+			list-style: none
+			margin: rem(20) gut($sm)
+			text-align: center
+			a
+				color: inherit
+				display: inline-block
+				padding: rem(5) rem(10)
+				text-decoration: none
+				text-transform: uppercase
+				transition: color .25s
+				&:hover, &:focus
+					color: $yellow
+			+breakpoint($md)
+				font-size: rem(16)
+			+breakpoint($lg)
+				display: flex
+				font-size: rem(14)
+				margin: rem(40) auto
+				justify-content: center
+				max-width: rem(map-get($lg, max))
+				width: 100%
+				.menu-item
+					margin: 0 (gut($lg) / 2)
+			+breakpoint($xl)
+				max-width: rem(map-get($xl, max))
+				.menu-item
+					margin: 0 (gut($xl) / 2)
+
+		&__social
+			+reset
+			display: flex
+			justify-content: center
+			list-style: none
+			margin: rem(20) gut($sm)
+			+breakpoint($lg)
+				margin: rem(40) auto
+				max-width: rem(map-get($lg, max))
+				width: 100%
+			+breakpoint($xl)
+				max-width: rem(map-get($xl, max))
+
+		&__copyright
+			+reset
+			font: rem(12) $sans
+			letter-spacing: .07em
+			text-align: center
+
+	&-menu
+		+breakpoint($xl)
+			display: flex
+			white-space: nowrap
+		.menu-item
+			break-inside: avoid-column
+		> .menu-item
+			border-bottom: 1px dotted $gray-light
+			color: $gray
+			a
+				color: inherit
+				display: block
+				font: rem(13, rem(20)) $sans
+				padding: rem(5)
+				position: relative
+				text-decoration: none
+				transition: color .25s
+				&:hover
+					color: $yellow
+			> a
+				border-radius: 3px
+				font-weight: 500
+				padding: rem(10) rem(5)
+				text-transform: uppercase
+				transition: background .25s, color .25s
+				&:focus
+					color: inherit
+				&:before
+					+stretch(50%, 0, false, false)
+					border-top: rem(5) solid $gray
+					border-left: rem(5) solid $gray
+					box-sizing: border-box
+					content: ""
+					display: block
+					height: rem(16)
+					transform: translate(-50%, -70%) rotate(225deg)
+					width: rem(16)
+				+breakpoint($xl)
+					font: rem(14) $sans
+					padding: rem(5)
+					text-transform: none
+					&:before
+						display: none
+
+			+breakpoint($md)
+				margin: 0 gut($md)
+			+breakpoint($lg)
+				margin: 0 gut($lg)
+			+breakpoint($xl)
+				border: 0 none
+				margin: 0 rem(map-get($xl, gut)) 0 0
+				position: relative
+				&:hover
+					> a
+						background: $yellow
+						color: #fff
+					> .sub-menu
+						opacity: 1
+						transition-delay: 0s, 0s
+						visibility: visible
+				> .sub-menu
+					+stretch(100%, false, false, 50%)
+					background: #fff
+					background-clip: padding-box
+					border-top: rem(45) solid transparent
+					box-shadow: inset 0 5px 5px -5px rgba(#000, .2)
+					min-width: 100%
+					opacity: 0
+					padding: rem(20) rem(25)
+					transform: translateX(-50%)
+					transition-property: opacity, visibility, border
+					transition-duration: .4s, 0s, .25s
+					transition-delay: 0s, .4s, 0s
+					visibility: hidden
+					&:before
+						+stretch(false, 0, 0, 0)
+						background: $yellow
+						content: ""
+						display: block
+						height: 2px
+					.vdv-head--small &
+						border-top-width: rem(20)
+
+			&--toggled
+				.sub-menu
+					display: block
+				> a,
+				> a:focus
+					color: $yellow
+				> a:before
+					transform: translate(-50%, -30%) rotate(45deg)
+
+			&--groups
+				> .sub-menu > .menu-item > a
+					color: $yellow
+					text-transform: uppercase
+				+breakpoint($xl)
+					> .sub-menu
+							align-items: flex-start
+							display: flex
+							flex-wrap: wrap
+							padding-left: rem(40)
+							padding-right: rem(40)
+							transition: opacity .4s 0, visibility 0 .4s
+							visibility: hidden
+							width: 1370%
+							> .menu-item
+								flex-grow: 1
+								flex-basis: 100% / 7
+								> a
+									color: $yellow
+									display: inline-block
+									font: rem(16) $serif
+									margin-bottom: rem(5)
+									text-transform: none
+									transition: color .25s
+									&:hover
+										color: $blue
+								&--wide, &--cols
+									flex-basis: 100% / 7 * 3
+									> .sub-menu
+										column-count: 3
+					&:hover > .sub-menu
+						opacity: 1
+						transition-delay: 0s, 0s
+						visibility: visible
+
+		.sub-menu
+			+reset
+			display: none
+			list-style: none
+			padding-bottom: rem(5)
+			+breakpoint($xl)
+				display: block
+				font: rem(13) $sans
+				text-transform: uppercase
+
+	&-post
+		&__header
+			position: relative
+
+		&__thumbnail
+			background-color: $gray-light
+			background-position: center top
+			background-size: cover
+			&:before
+				content: ""
+				display: block
+				padding-top: percentage(861/1680)
+			+breakpoint($md)
+				left: 50%
+				max-height: rem(400)
+				overflow: hidden
+				position: relative
+				transform: translateX(-50%)
+				width: 100vw
+			+breakpoint($lg)
+				max-height: rem(500)
+
+		&__tag
+			background: $yellow
+			border-radius: 3px
+			color: #fff
+			display: inline-block
+			font: rem(14, 2.2) $serif
+			margin: rem(-20) gut($sm) 0
+			padding: 0 1.2em
+			position: absolute
+			text-decoration: none
+			text-transform: uppercase
+			transform: translateY(-100%)
+			transition: background .25s
+			z-index: 3
+			&:hover, &:focus
+				background: $blue-light
+			+breakpoint($md)
+				margin-left: gut($md)
+				margin-right: gut($md)
+			+breakpoint($lg)
+				margin-left: gut($lg)
+				margin-right: gut($lg)
+			+breakpoint($xl)
+				margin-left: gut($xl)
+				margin-right: gut($xl)
+
+		&__title
+			+reset
+			color: $gray
+			font: rem(30, 1.1) $serif
+			padding: rem(20) gut($sm)
+			+breakpoint($md)
+				color: #fff
+				font-size: rem(42)
+				margin: 0 (col($md, 2) + gut($md)) 0 gut($md)
+				padding: 0
+				text-shadow: 1px 1px 1px rgba(#000, .4)
+				-webkit-font-smoothing: subpixel-antialiased
+				-moz-osx-font-smoothing: auto
+			+breakpoint($lg)
+				font-size: rem(50)
+				margin: 0 (col($lg, 4) + gut($lg)) 0 gut($lg)
+			+breakpoint($xl)
+				font-size: rem(64)
+				margin: 0 (col($xl, 4) + gut($xl)) 0 gut($xl)
+
+		&__meta
+			color: $gray
+			margin: 0 gut($sm) rem(20)
+			position: relative
+			.avatar
+				+stretch(50%, 0, false, false)
+				border-radius: 50%
+				display: block
+				height: rem(40)
+				transform: translateY(-50%)
+				width: rem(40)
+			+breakpoint($md)
+				+stretch(false, false, 0, 50%)
+				background: rgba(#000, .3)
+				color: #fff
+				margin: 0 auto
+				padding: rem(5) 0
+				transform: translateX(-50%)
+				width: 100vw
+				.avatar
+					margin: 0 rem(20) 0 gut($md)
+					position: static
+					transform: none
+				&--fixed
+					animation: fade-in .4s
+					background: #fff
+					bottom: 0
+					box-shadow: rgba(#000, .05) 0 -1px 3px 0
+					color: $gray
+					left: 50%
+					position: fixed
+					right: 0
+					z-index: 10
+					.avatar
+						height: rem(34)
+						width: rem(34)
+			+breakpoint($lg)
+				.avatar
+					margin-left: gut($lg)
+			+breakpoint($xl)
+				padding: rem(10) 0
+				.avatar
+					margin-left: gut($xl)
+
+		&__author,
+		&__date
+			display: block
+			font: rem(14, 1.4) $serif
+			text-transform: lowercase
+			a
+				color: inherit
+				text-decoration: none
+				transition: color .25s
+				&:hover, &:focus
+					color: $yellow
+			b
+				font: inherit
+				text-transform: uppercase
+			+breakpoint($xl)
+				font-size: rem(12)
+
+		& &__share
+			+stretch(50%, rem(50), false, false)
+			transform: translateY(-50%)
+			+breakpoint($md)
+				position: static
+				transform: translateY(0)
+
+		&__content
+			+content
+
+		&__widget-extra
+			+breakpoint($md)
+				display: none
+
+		&__widgets
+			+breakpoint($md)
+				float: right
+				margin: rem(60) 0 rem(20)
+				width: col($md, 4)
+			+breakpoint($lg)
+				width: col($lg, 5)
+			+breakpoint($xl)
+				margin-right: col($xl, 2)
+				margin-bottom: 0
+				width: col($xl, 4)
+
+		&__special-widget
+			margin: rem(60) auto
+
+		&__heading
+			@extend .vdv-content__heading
+			@extend .vdv-content__heading--alt
+			font-size: rem(56)
+			margin-bottom: 0
+			+breakpoint($md)
+				font-size: rem(110)
+			+breakpoint($lg)
+				margin-left: gut($lg)
+				margin-right: gut($lg)
+			+breakpoint($xl)
+				margin-left: gut($xl)
+				margin-right: gut($xl)
+
+		&__name
+			+reset
+			color: $yellow
+			font: rem(24) $serif
+			margin: 0 gut($sm) rem(10)
+			a
+				color: inherit
+				text-decoration: none
+			+breakpoint($md)
+				margin: 0 gut($md) rem(20)
+			+breakpoint($lg)
+				margin-left: gut($lg, 7)
+				margin-right: gut($lg, 7)
+				.vdv-post__related--alt &
+					margin-left: gut($lg)
+					margin-right: gut($lg)
+			+breakpoint($xl)
+				margin-left: gut($xl, 8)
+				margin-right: gut($xl, 8)
+				.vdv-post__related--alt &
+					margin-left: gut($xl)
+					margin-right: gut($xl)
+
+		&__related
+			+clearfix
+			margin-bottom: rem(20)
+			position: relative
+			&--alt
+				clear: both
+				padding-top: rem(60)
+				position: relative
+				&:before
+					+stretch(rem(60/2 - 4), false, false, 50%)
+					border-bottom: 1px dashed $yellow
+					border-top: 1px dashed $yellow
+					content: ""
+					display: block
+					height: 6px
+					transform: translateX(-50%)
+					width: 100vw
+			+breakpoint($lg)
+				float: left
+				width: 50%
+				&--alt
+					float: none
+					width: 100%
+
+		&__related-all
+			+reset
+			display: flex
+			flex-wrap: wrap
+			list-style: none
+			margin-top: rem(-20)
+
+		&__tags
+			+reset
+			display: flex
+			flex-wrap: wrap
+			margin: rem(40) gut($sm) rem(30)
+			a
+				background: $yellow
+				border-radius: 3px
+				color: #fff
+				font: rem(14, 2) $serif
+				margin: 0 rem(10) rem(10) 0
+				padding: 0 .8em
+				text-decoration: none
+				text-transform: uppercase
+				transition: background .25s
+				&:hover, &:focus
+					background: $blue
+			+breakpoint($md)
+				margin: rem(60) gut($md) rem(50)
+			+breakpoint($lg)
+				margin-left: gut($lg)
+				margin-right: gut($lg)
+			+breakpoint($xl)
+				margin-left: gut($xl)
+				margin-right: gut($xl)
+
+		&__footer
+			clear: both
+
+		+breakpoint($md)
+			&__wrap
+				+stretch(false, 0, rem(100), 0)
+				margin: 0 auto
+				max-width: rem(map-get($md, max))
+
+			&__meta &__wrap
+				align-items: center
+				display: flex
+				position: static
+
+			&__author,
+			&__date
+				font-family: $sans
+
+			&__date
+				text-transform: uppercase
+				&:before
+					content: "››"
+					display: inline
+					margin: 0 rem(10)
+
+		+breakpoint($lg)
+			&__wrap
+				max-width: rem(map-get($lg, max))
+
+		+breakpoint($xl)
+			&__wrap
+				max-width: rem(map-get($xl, max))
+
+	&-widgets
+		+reset
+		+breakpoint($lg)
+			box-shadow: inset 1px 0 0 $gray-light
+			float: right
+			margin-bottom: rem(60)
+			padding-left: col($lg, .5)
+			width: col($lg, 5.5)
+		+breakpoint($xl)
+			padding-left: 0
+			width: col($xl, 6)
+
+	&-widget
+		margin: 0 gut($sm) rem(40)
+		+breakpoint($md)
+			margin-left: gut($md)
+			margin-right: gut($md)
+			.vdv-post__widgets &
+				margin-left: gut($md, 4)
+				margin-right: gut($md, 4)
+		+breakpoint($lg)
+			margin-left: gut($lg, 5)
+			margin-right: gut($lg, 5)
+			&:last-child
+				margin-bottom: 0
+		+breakpoint($xl)
+			margin: 0 gut($xl, 6) rem(60) (col(6) - gut($xl, 6))
+			.vdv-post__widgets &
+				margin-left: gut($xl, 4)
+				margin-right: gut($xl, 4)
+
+		&__title
+			+reset
+			margin-bottom: rem(10)
+
+		&--description
+			background: #fff
+			color: $gray
+			display: none
+			font: rem(14, 1.4) $sans
+			padding: rem(map-get($sm, gut)) * 2
+			position: relative
+			+breakpoint($md)
+				padding: rem(map-get($md, gut)) * 2
+			+breakpoint($lg)
+				display: block
+				padding: rem(map-get($lg, gut)) * 2
+			+breakpoint($xl)
+				padding: rem(map-get($xl, gut)) * 2
+			&:before,
+			&:after
+				+stretch-x
+				border-bottom: 1px dashed $yellow
+				border-top: 1px dashed $yellow
+				content: ""
+				display: block
+				height: 6px
+				pointer-events: none
+			&:before
+				top: 0
+			&:after
+				bottom: 0
+			img
+				height: auto
+				max-width: 100%
+				vertical-align: bottom
+			p
+				+reset
+				font: inherit
+				margin-bottom: rem(10)
+				&:last-child
+					margin-bottom: 0
+			a
+				border-bottom: 2px solid $yellow
+				color: inherit !important
+				font-weight: bold
+				text-decoration: none
+				transition: color .25s
+				&:hover, &:focus
+					color: $yellow !important
+
+		&--description &__title
+			color: $yellow
+			font: rem(30, 1) $serif
+			margin: 0 0 .5em
+			+breakpoint($md)
+				font-size: rem(48)
+			+breakpoint($lg)
+				font-size: rem(24)
+
+		&--top-3 &__title
+			@extend .vdv-content__heading
+			@extend .vdv-content__heading--alt
+			font-size: rem(70)
+			margin-left: 0
+			margin-right: 0
+			span
+				font-size: rem(24)
+
+		& &--partner
+			display: none
+			+breakpoint($md)
+				display: block
+
+		&--planning,
+		&--partner
+			background: #fff
+			border-top: 1px dashed $yellow
+			padding: rem(map-get($sm, gut))
+			+breakpoint($md)
+				padding: rem(map-get($md, gut))
+			+breakpoint($lg)
+				padding: rem(map-get($lg, gut))
+			+breakpoint($xl)
+				padding: rem(map-get($xl, gut))
+
+		&--planning &__title,
+		&--partner &__title
+			color: $yellow
+			font: rem(24, 1) $serif
+			span
+				color: $gray-light
+				display: block
+				font-size: rem(30)
+
+	&-planning
+		+reset
+		list-style: none
+
+		img
+			+stretch(0, false, false, 0)
+			display: block
+			height: auto
+			width: 100%
+
+		&__item
+			color: $gray
+			font: rem(14, 1.4) $sans
+			margin-top: rem(map-get($sm, gut))
+
+		&__link
+			align-items: flex-start
+			color: inherit
+			display: flex
+			text-decoration: none
+			transition: color .25s
+			&:hover, &focus
+				color: $yellow
+
+		&__image
+			background-position: center center
+			background-size: cover
+			border-radius: 3px
+			margin-right: rem(map-get($sm, gut))
+			overflow: hidden
+			position: relative
+			width: calc(50% - #{rem(map-get($sm, gut))})
+			z-index: 1
+			&:before
+				content: ""
+				display: block
+				padding-top: percentage(6/10)
+
+		&__title
+			width: 50%
+
+	&-partner
+		color: $gray
+		font: rem(16, 1.5) $sans
+
+		img
+			+stretch(0, 0, false, false)
+			border-radius: 50%
+			display: block
+			height: rem(40)
+			width: rem(40)
+
+		p
+			+reset
+			font: inherit
+			margin-top: rem(20)
+
+		a
+			border-bottom: 2px solid $yellow
+			color: inherit
+			font-weight: bold
+			text-decoration: none
+			transition: color .25s
+			&:hover, &:focus
+				color: $yellow
+
+		&__author
+			+reset
+			padding: 0 rem(50) 0 0
+			position: relative
+
+		&__caption
+			font: rem(14, 1.3) $sans
+			b
+				text-transform: uppercase
+
+	&-comments
+		margin-top: rem(30)
+
+		&__list
+			+reset
+			display: flex
+			flex-direction: column
+			list-style: none
+			margin-top: rem(-40)
+			.vdv-post__content &
+				list-style: none
+				margin-left: 0
+			> .comment
+				order: 1
+			> .pingback
+				order: 2
+			> .trackback
+				order: 3
+			.comment-body
+				margin-top: rem(40)
+			.comment-meta
+				font: rem(16, 1.25) $sans
+				margin-bottom: rem(10)
+				padding-left: rem(40)
+				position: relative
+			.avatar
+				+stretch(0, false, false, 0)
+				border-radius: 3px
+				display: block
+				height: rem(34)
+				width: rem(34)
+			.says
+				display: none
+			.comment-metadata
+				font-size: rem(12)
+				a
+					border: 0 none
+					font-weight: normal
+			.comment-author a
+				border: 0 none
+				color: $gray-dark
+			.comment-content
+				font: rem(14, 1.5) $sans
+				p, p:first-child
+					margin-top: rem(10)
+			.reply
+				margin-top: rem(10)
+			.comment-reply-link
+				// background: $yellow
+				border: 0 none
+				// border-radius: 3px
+				// color: #fff
+				color: $yellow
+				display: inline-block
+				font: rem(14, 2.2) $serif
+				// padding: 0 1.2em
+				text-decoration: none
+				text-transform: uppercase
+				// transition: background .25s
+				transition: color .25s
+				&:hover, &:focus
+					// background: $blue-light
+					// color: #fff
+					color: $blue-light
+			.children
+				+reset
+				border-left: 2px dashed $yellow
+				list-style: none
+				padding-left: rem(20)
+
+		.comment-respond,
+		.form-submit
+			margin-top: rem(30)
+		.comment-reply-title
+			margin-bottom: rem(20)
+		.comment-form
+			font-size: rem(14)
+			label
+				display: inline-block
+				font: rem(14) $serif
+				margin-bottom: .5em
+				text-transform: uppercase
+			input,
+			textarea
+				+reset
+				appearance: none
+				border: 1px solid $gray-light
+				border-radius: 3px
+				color: $gray-dark
+				display: block
+				font: rem(16) $sans
+				padding: .5em
+				width: 100%
+			.submit
+				background: $yellow
+				border: 0 none
+				border-radius: 4px
+				color: #fff
+				cursor: pointer
+				font: rem(14) $serif
+				padding: 1em
+				text-transform: uppercase
+				transition: background .25s
+				width: auto
+				&:hover
+					background: $blue
+
+	&-archive
+		+clearfix
+
+		&__header
+			color: $gray
+			font: rem(14, 1.4) $sans
+			margin: 0 gut($sm)
+			+breakpoint($md)
+				margin: 0 gut($md)
+			+breakpoint($lg)
+				align-items: center
+				border-bottom: 1px solid $gray-light
+				display: flex
+				margin: 0 gut($lg) rem(40)
+			p
+				+reset
+				font: inherit
+				+breakpoint($lg)
+					display: none
+
+		&__wrap
+			background: #fff
+			margin: rem(20) 0
+			padding: rem(map-get($sm, gut)) * 2
+			position: relative
+			&:before
+				@extend .vdv-widget--description:before
+			&:after
+				@extend .vdv-widget--description:after
+			+breakpoint($md)
+				margin: rem(40) 0
+				padding: rem(map-get($md, gut)) * 2
+			+breakpoint($lg)
+				background: none
+				margin: 0 auto 0 0
+				padding: 0
+				&:before,
+				&:after
+					display: none
+
+		&__heading
+			+reset
+			color: $yellow
+			font: rem(30, 1) $serif
+			margin: 0 0 .5em
+			+breakpoint($md)
+				font-size: rem(42)
+			+breakpoint($lg)
+				color: $gray
+				font-size: rem(56)
+				margin: 0
+				padding: rem(30) 0
+			+breakpoint($xl)
+				font-size: rem(64)
+
+		&__ad
+			@extend .adrotate_widgets
+			margin: rem(20) 0
+			+breakpoint($md)
+				margin: rem(40) 0
+			+breakpoint($lg)
+				$min: map-get($lg, max) / map-get($lg, col) * 5 - map-get($lg, gut) * 2
+				$max: map-get($lg, max) - map-get($lg, gut) * 2
+				margin: 0
+				width: percentage($min / $max)
+			+breakpoint($xl)
+				$min: map-get($xl, max) / map-get($xl, col) * 5
+				$max: map-get($xl, max) - map-get($xl, gut) * 2
+				width: percentage($min / $max)
+
+		&__list
+			+reset
+			list-style: none
+
+		.nav-links
+			display: flex
+			margin: 0 gut($sm) rem(40)
+			justify-content: center
+			+breakpoint($lg)
+				margin-bottom: 0
+				margin-top: rem(60)
+
+		.page-numbers
+			background: $yellow
+			border: 1px solid $yellow
+			border-radius: 4px
+			color: #fff
+			cursor: pointer
+			font: rem(12) $serif
+			margin: 0 .5em
+			padding: .5em 1em
+			text-decoration: none
+			text-transform: uppercase
+			transition: background .25s, border .25s
+			&:hover, &:focus
+				background: $blue
+				border-color: $blue
+			&.current,
+			&.dots
+				background: transparent
+				border-color: $yellow
+				color: $yellow
+				cursor: default
+
+		&__body
+			+reset
+			+breakpoint($lg)
+				box-shadow: 1px 0 0 $gray-light
+				float: left
+				margin-bottom: rem(60)
+				padding-right: col($lg, .5)
+				width: col($lg, 8.5)
+			+breakpoint($xl)
+				padding-right: 0
+				width: col($xl, 10)
+
+	&-page
+		&__header
+			@extend .vdv-post__header
+
+		&__thumbnail
+			@extend .vdv-post__thumbnail
+
+		&__title
+			@extend .vdv-post__title
+			border-bottom: 1px dashed $yellow
+			+breakpoint($md)
+				border: 0 none
+			+breakpoint($lg)
+				font-size: rem(70)
+
+		&__content
+			@extend .vdv-post__content
+			+breakpoint($md)
+				float: none
+				margin-left: auto
+				margin-right: auto
+			+breakpoint($lg)
+				width: col($lg, 8)
+			+breakpoint($xl)
+				width: col($xl, 10)
+
+		&__wrap
+			@extend .vdv-post__wrap
+			+breakpoint($md)
+				margin-bottom: rem(-60)
+
+	&-not-found
+		padding: rem(40) 0
+
+		&__title
+			+reset
+			color: $turquoise
+			font: rem(94) $serif
+			text-align: center
+
+		&__text
+			+reset
+			color: $gray
+			font: rem(16, 1.3) $serif
+			text-align: center
+
+		&__search
+			@extend %container
+			&:before
+				background: url(../img/404.svg) center center no-repeat
+				background-size: contain
+				content: ""
+				display: block
+				height: rem(195)
+				margin: rem(40) auto
+				width: rem(312)
+
+		&__field
+			+reset
+			margin: 0 gut($sm)
+			+breakpoint($md)
+				margin: 0 auto
+				padding: 0 gut($md)
+				width: col($md, 6)
+			+breakpoint($lg)
+				padding: 0 gut($lg)
+				width: col($lg, 8)
+			+breakpoint($xl)
+				padding: 0 gut($xl)
+				width: col($xl, 8)
+
+		&__input
+			+reset
+			border: 1px solid $gray-light
+			border-radius: 3px
+			color: $gray
+			display: block
+			font: rem(16) $sans
+			padding: 1em
+			text-align: center
+			width: 100%
+			&::placeholder
+				color: $gray
+				text-transform: lowercase
+
+	&-ad
+		@extend .adrotate_widgets
+		clear: both
+
+		&--side
+			margin: 0 gut($sm) rem(40)
+			+breakpoint($md)
+				margin: 0 gut($md) rem(40)
+			+breakpoint($lg)
+				margin: 0 gut($lg, 5)
+			+breakpoint($xl)
+				margin: 0 gut($xl, 6) 0 (col(6) - gut($xl, 6))
+
+		&--between
+			margin: 0 gut($sm) rem(40)
+			+breakpoint($md)
+				margin: 0 gut($md) rem(40)
+			+breakpoint($lg)
+				float: left
+				margin: rem(80 - 60) gut($lg) rem(80)
+				width: 100% - gut($lg) * 2
+			+breakpoint($xl)
+				margin: rem(100 - 60) gut($xl) rem(100)
+				width: 100% - gut($xl) * 2
+
+	&-share
+		display: flex
+		font: 0/0 serif
+		justify-content: flex-end
+		margin-left: auto
+		position: relative
+		z-index: 5
+
+		&__toggle
+			+icon(share)
+			transform: translateY(-4%)
+			.vdv-post__share &
+				transform: translateY(0)
+
+		&__toggle,
+		&__link
+			align-items: center
+			display: inline-flex
+			justify-content: center
+			text-align: center
+			width: rem(30)
+
+		&__toggle:before,
+		&__link:before
+			font-size: rem(18)
+			line-height: rem(26)
+			.vdv-post__share &
+				font-size: rem(22)
+				line-height: rem(30)
+
+		&__link
+			color: inherit
+			position: relative
+			text-decoration: none
+			transition: color .25s, opacity .25s
+			z-index: 2
+			&--facebook
+				+icon(facebook)
+			&--twitter
+				+icon(twitter)
+			&--googleplus
+				+icon(googleplus)
+			&--linkedin
+				+icon(linkedin)
+			&--pinterest
+				+icon(pinterest)
+			&--reddit
+				+icon(reddit)
+			&--tumblr
+				+icon(tumblr)
+			&--email
+				+icon(email)
+
+		&__toggle,
+		& > &__link
+			margin-left: 8px
+
+		& > &__link:hover
+			color: $yellow
+
+		.vdv-post__share > &__link
+			display: none
+			+breakpoint($md)
+				display: inline-block
+
+		&__wrap
+			+stretch(false, false, 100%, 100%)
+			border-bottom: rem(10) solid transparent
+			color: $gray
+			display: flex
+			flex-wrap: wrap
+			margin: 0 0 0 rem(30/-2)
+			opacity: 0
+			padding: rem(4)
+			transform: translateX(-50%)
+			transition-property: opacity, visibility
+			transition-duration: .4s, 0s
+			transition-delay: 0s, .4s
+			visibility: hidden
+			width: rem(38 * 4)
+			.vdv-post__share &,
+			.vdv-features__entry--secondary &,
+			.vdv-features__entry--tertiary &,
+			.vdv-features__entry--quinary &
+				margin-left: -6px
+				transform: translateX(-100%)
+			&:before
+				+stretch
+				background: #fff
+				border: 2px solid $gray-light
+				border-radius: 4px
+				box-sizing: border-box
+				content: ""
+				display: block
+				z-index: 1
+			&:after
+				+stretch(100%, false, false, 50%)
+				border-left: 6px solid transparent
+				border-right: 6px solid transparent
+				border-top: 6px solid $gray-light
+				content: ""
+				display: block
+				transform: translateX(-50%)
+				.vdv-post__share &,
+				.vdv-features__entry--secondary &,
+				.vdv-features__entry--tertiary &,
+				.vdv-features__entry--quinary &
+					left: calc(100% - 12px)
+
+		&__wrap &__link
+			margin: rem(4)
+			&:hover
+				color: $yellow
+
+		&--active &__wrap
+			opacity: 1
+			transition-delay: 0s, 0s
+			visibility: visible
+
+		+breakpoint($xl)
+			&--active &__wrap
+				transition-property: opacity, visibility
+				transition-duration: .4s, 0s
+				transition-delay: 0s, .4s
+				opacity: 0
+				visibility: hidden
+			&__wrap:hover,
+			&__toggle:hover ~ &__wrap
+				opacity: 1
+				transition-delay: 0s, 0s
+				visibility: visible
+
+.menu-item
+	&--facebook,
+	&--flipboard,
+	&--twitter,
+	&--googleplus,
+	&--instagram,
+	&--youtube,
+	&--rss
+		+reset
+		a
+			align-items: center
+			color: inherit
+			display: inline-flex
+			font: 0/0 serif
+			height: rem(30)
+			justify-content: center
+			text-align: center
+			text-decoration: none
+			transition: color .25s
+			width: rem(30)
+			&:before
+				font-size: rem(22)
+				line-height: rem(30)
+			&:hover
+				color: $yellow
+		+ .menu-item
+			margin-left: rem(15)
+	&--facebook a
+		+icon(facebook)
+	&--flipboard a
+		+icon(flipboard)
+	&--twitter a
+		+icon(twitter)
+	&--googleplus a
+		+icon(googleplus)
+	&--instagram a
+		+icon(instagram)
+	&--youtube a
+		+icon(youtube)
+	&--rss a
+		+icon(rss)
+
+.widget
+	&:not([class*="vdv-widget--"])
+		color: $gray
+		font: rem(14, 1.4) $sans
+		.widgettitle
+			@extend .vdv-special__heading
+		+breakpoint($md)
+			float: left
+			width: col($md, 5) - gut($md) * 2
+		+breakpoint($lg)
+			float: none
+			width: auto
+	&_calendar
+		@extend .vdv-special
+		.calendar_wrap
+			padding: rem(20) rem(20) 0
+		table
+			font: rem(14, 2) $sans
+			margin: 0
+			text-align: center
+			width: 100%
+		caption
+			border-bottom: 1px dashed $yellow
+		caption, th
+			color: $gray-dark
+			font-family: $serif
+			text-transform: uppercase
+		a
+			border-bottom: 2px solid $yellow
+			color: $gray-dark
+			font-weight: bold
+			text-decoration: none
+			transition: color .25s
+			&:hover, &:focus
+				color: $yellow
+	&_archive,
+	&_categories,
+	&_nav_menu,
+	&_meta,
+	&_pages,
+	&_recent_entries,
+	&_recent_comments,
+	&_rss
+		@extend .vdv-special
+		ul
+			+reset
+			list-style: none
+			padding: rem(20) rem(20) 0
+		li
+			border-top: 1px dotted $gray-light
+			padding: .5em .2em
+			&:nth-child(1)
+				border-top: 0 none
+		a
+			color: inherit
+			font-weight: bold
+			text-decoration: none
+			transition: color .25s
+			&:hover, &:focus
+				color: $yellow
+		select
+			border: 0 none
+			box-sizing: border-box
+			display: block
+			font: rem(14) $sans
+			height: rem(40)
+			margin-bottom: rem(-20)
+			padding-left: rem(10)
+			padding-right: rem(10)
+			width: 100%
+		span, cite
+			display: block
+			text-transform: uppercase
+	&_recent_comments
+		a
+			border-bottom: 2px solid $yellow
+			color: $gray-dark
+			font-weight: bold
+	&_media_image
+		@extend .vdv-special
+		.wp-caption
+			+reset
+			width: auto !important
+		.wp-caption-text
+			margin-bottom: rem(-20)
+			padding: rem(10)
+		img
+			display: block
+			height: auto
+			width: 100%
+	&_tag_cloud
+		@extend .vdv-special
+		.tagcloud
+			padding: rem(20) rem(20) 0
+			text-align: center
+		a
+			border-bottom: 2px solid $yellow
+			color: $gray
+			font-weight: bold
+			text-decoration: none
+			transition: color .25s
+			&:hover, &:focus
+				color: $yellow
+	&_search
+		@extend .vdv-special
+		background: none
+		&.widget .widgettitle
+			background: $ice-light
+			color: $yellow
+			padding: 0 rem(10)
+			text-transform: none
+		form
+			float: none
+			margin: 0 0 rem(-20)
+			> div
+				border: 1px dashed $yellow
+		input
+			border: 0 none
+			height: rem(40)
+		button
+			border: 0 none
+			height: rem(40)
+		button, span
+			width: rem(40)
+		+breakpoint($md)
+			&:not([class*="vdv-widget--"])
+				float: none
+				width: auto
+			form > div
+				margin-left: 0
+				margin-right: 0
+		+breakpoint($xl)
+			div
+				margin: 0
+			label,
+			.vdv-post__widgets & label
+				border: 0 none
+				width: 100%
+			input
+				padding: 0 rem(10) 0 rem(40)
+	&_text
+		@extend .vdv-special
+		.textwidget
+			color: $gray-dark
+			padding: rem(20) rem(20) 0
+			> *:first-child
+				margin-top: 0
+			> *:last-child
+				margin-bottom: 0
+			img
+				height: auto
+				max-width: 100%
+
+.adrotate_widgets
+	align-items: center
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIElEQVQYV2P8upPBmIGBgYHbneEsiGbEEACJIgNGdAEARg0GBV/Ec8YAAAAASUVORK5CYII=)
+	display: flex
+	justify-content: center
+	img
+		display: block
+		height: auto
+		margin: auto
+		max-width: 100%
+.widget.adrotate_widgets
+	float: none
+	width: auto
+
+@keyframes fade-in
+	from
+		opacity: 0
+	to
+		opacity: 1

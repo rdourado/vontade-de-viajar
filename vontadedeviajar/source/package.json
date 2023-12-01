@@ -1,0 +1,60 @@
+{
+  "name": "parafa-cookiecutter-front",
+  "version": "1.0.0",
+  "description": "",
+  "engines": {
+    "npm": ">=5.4.0"
+  },
+  "scripts": {
+    "preinstall": "brew install graphicsmagick || brew upgrade graphicsmagick || true",
+    "js:dev": "webpack js/entry.js ../assets/js/app.js",
+    "js:prod": "npm run js:dev -s -- -p --env.production",
+    "js:watch": "chokidar \"js/**\" -c 'npm run js:dev'",
+    "css": "node-sass css -o ../assets/css",
+    "css:dev": "npm run css -s -- --source-map-embed",
+    "css:prod": "npm run css -s -- --output-style compressed",
+    "css:watch": "chokidar \"css/**\" -c 'npm run css:dev'",
+    "postcss:dev": "postcss ../assets/css/*.css -r -u autoprefixer && rsync -qav img ../assets/",
+    "postcss:prod": "postcss ../assets/css/*.css -r -c postcss-config.js --no-map && imagemin-newer img ../assets/img",
+    "icons": "node webfonts.js",
+    "icons:watch": "chokidar \"icons/**\" -c 'npm run icons'",
+    "sprite": "sprity create img/ sprite/*.png --cssPath ../img -s ../css/_sprite.scss -d 1:72 -d 2:192 -p sass --engine sprity-gm --orientation binary-tree --format png --margin 10 --cachebuster --prefix vdv-sprite && gm convert img/sprite\\@2x.png -thumbnail 50% img/sprite.png",
+    "sprite:watch": "chokidar \"sprite/**\" -c 'npm run sprite'",
+    "dev": "npm run icons & npm run sprite && npm run css:dev && npm run js:dev",
+    "prod": "npm run icons & npm run sprite && npm run css:prod && npm run js:prod",
+    "watch": "npm run css:watch & npm run js:watch & npm run icons:watch & npm run sprite:watch",
+    "server": "browser-sync start -c bs-config.js",
+    "start": "npm run watch & npm run server"
+  },
+  "browserslist": "last 4 versions",
+  "repository": {
+    "type": "git",
+    "url": "git+https://rdourado@github.com/parafernalia/parafa-cookiecutter-front.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/parafernalia/parafa-cookiecutter-front/issues"
+  },
+  "homepage": "https://github.com/parafernalia/parafa-cookiecutter-front#readme",
+  "devDependencies": {
+    "autoprefixer": "^7.1.2",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "browser-sync": "^2.18.13",
+    "chokidar-cli": "^1.2.0",
+    "click-outside": "^2.0.2",
+    "cssnano": "^3.10.0",
+    "imagemin-newer": "^1.0.2",
+    "imagesloaded": "^4.1.4",
+    "node-sass": "^4.5.3",
+    "postcss-cli": "^4.1.0",
+    "smoothscroll": "^0.4.0",
+    "sprity-cli": "^1.0.1",
+    "sprity-gm": "^1.0.2",
+    "sprity-sass": "^1.0.4",
+    "webfonts-generator": "^0.4.0",
+    "webpack": "^3.5.5"
+  }
+}

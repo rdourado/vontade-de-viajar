@@ -1,0 +1,362 @@
+// Fonts
+$serif: "Bree Serif", serif
+$sans: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif
+$base-font-size: 16px
+
+// Grid
+$sm: (col:  4, gut: 20, bkp:  576, max:  540)
+$md: (col: 10, gut: 15, bkp:  768, max:  720)
+$lg: (col: 14, gut: 15, bkp:  992, max:  960)
+$xl: (col: 16, gut: 15, bkp: 1300, max: 1240)
+
+// Colors
+$ice-light: #f7f7f7
+$ice: #f2f2f2
+$gray-lighter: #ddd
+$gray-light: #c9c9c9
+$gray: #8a8a8a
+$gray-dark: #666
+$gray-darker: #333
+$yellow-light: #f8db95
+$yellow: #ffd200
+$yellow-dark: #f2b800
+$blue-light: #40ccd9
+$blue: #57b3d9
+$turquoise: #1da0b1
+
+// Functions
+@function col($bp: $sm, $columns: 1)
+	@if type-of($bp) == number
+		@return (100% / round($bp)) * $columns
+	@else
+		@return (100% / map-get($bp, col)) * $columns
+
+@function flood($bp: $sm, $columns: 0)
+	$col: map-get($bp, col)
+	$gut: map-get($bp, gut)
+	$max: map-get($bp, max)
+	@if $columns <= 0 or $columns >= $col
+		$columns: $col
+	$max: $max / $col * $columns
+	@return (100 - percentage($max / ($max - $gut * 2))) / 2
+
+@function gut($bp: $sm, $columns: 0)
+	$col: map-get($bp, col)
+	$gut: map-get($bp, gut)
+	$max: map-get($bp, max)
+	@if $columns <= 0 or $columns >= $col
+		$columns: $col
+	@return percentage($gut / ($max * $columns / $col))
+
+@function rem($px, $line: 0)
+	$size: (($px * 1px) / $base-font-size) * 1rem
+	@if $line > 0
+		@return #{$size}/#{$line}
+	@else
+		@return $size
+
+// Mixins
+=breakpoint($bp: $sm)
+	@media (min-width: rem(map-get($bp, bkp)))
+		@content
+
+=clearfix
+	&:after
+		clear: both
+		content: ""
+		display: table
+
+=reset
+	box-sizing: border-box
+	margin: 0
+	padding: 0
+
+=stretch($top: 0, $right: 0, $bottom: 0, $left: 0)
+	position: absolute
+	@if $top
+		top: $top
+	@if $bottom
+		bottom: $bottom
+	@if $left
+		left: $left
+	@if $right
+		right: $right
+
+=stretch-x($left: 0, $right: 0)
+	+stretch(false, $right, false, $left)
+
+=stretch-y($top: 0, $bottom: 0)
+	+stretch($top, false, $bottom, false)
+
+=content
+	+reset
+	color: $gray-dark
+	font: rem(16, 1.5) $sans
+	margin: rem(40) gut($sm)
+	p, ul, ol,
+	h1, h2, h3,
+	h4, h5, h6,
+	blockquote,
+	.wp-caption,
+	.embed-youtube,
+	.embed-container,
+	.wpview[data-wpview-type="embedURL"],
+	.tiled-gallery
+		+reset
+		clear: left
+		margin-bottom: 0
+		margin-top: rem(20)
+	>
+		p, ul, ol,
+		h1, h2, h3,
+		h4, h5, h6,
+		blockquote,
+		.wp-caption,
+		.embed-youtube,
+		.embed-container,
+		.wpview[data-wpview-type="embedURL"],
+		.tiled-gallery
+			&:first-child
+				margin-top: 0
+	h1, h2, h3,
+	h4, h5, h6
+		color: $gray-dark
+		font-family: $serif
+		font-weight: normal
+		line-height: 1.1em
+		margin: rem(30) 0
+	h1, h2
+		font-size: rem(30)
+	h3
+		font-size: rem(26)
+	h4
+		font-size: rem(20)
+	h5
+		font-family: $sans
+		font-size: rem(16)
+		margin: rem(20) 0
+		&:before
+			color: $yellow
+			content: "+"
+			font-size: 1.25em
+			font-weight: bold
+			margin-right: .25em
+		a
+			border: 0 none
+			color: $blue
+			&:hover, &:focus
+				color: $yellow
+	ul
+		list-style: disc
+		margin-left: 2em
+	ol
+		list-style: numeric
+		margin-left: 2em
+	img,
+	.wp-block-image,
+	.wp-block-gallery
+		height: auto
+		margin: 0
+		max-width: 100%
+		vertical-align: bottom
+	.wp-block-image,
+	.wp-block-gallery
+		margin-bottom: rem(20)
+		margin-top: rem(20)
+	a
+		border-bottom: 2px solid $yellow
+		color: inherit
+		font-weight: bold
+		text-decoration: none
+		transition: color .25s
+		&:hover, &:focus
+			color: $yellow
+	blockquote
+		float: left
+		font-style: italic
+		margin: rem(40) 12%
+		position: relative
+		&:before, &:after
+			color: rgba(#000, .1)
+			display: block
+			font: bold rem(112, 1) Georgia, serif
+			pointer-events: none
+			z-index: 1
+		&:before
+			+stretch(0, false, false, 0)
+			content: "“"
+			margin: -.2em 0 0 -.3em
+		&:after
+			+stretch(false, 0, 0, false)
+			content: "”"
+			margin: 0 -.3em -.65em 0
+		p
+			margin: 0
+			position: relative
+			z-index: 3
+	.wpcf7-form-control
+		+reset
+		appearance: none
+		border: 1px solid $gray-light
+		border-radius: 4px
+		color: $gray-dark
+		display: block
+		font: rem(16) $sans
+		padding: .5em
+		transition: border .25s
+		width: 100%
+		&:focus
+			border-color: $gray-dark
+	.wpcf7-not-valid
+		border-color: $yellow
+	.wpcf7-not-valid-tip
+		color: $gray-darker
+		font: bold rem(12) $sans
+	.wpcf7-submit
+		background: $yellow
+		border: 1px solid $yellow
+		border-radius: 3px
+		color: #fff
+		cursor: pointer
+		display: block
+		font: rem(16) $serif
+		padding: .5em
+		text-transform: uppercase
+		transition: background .25s, border .25s
+		width: 50%
+		&:hover
+			background: $blue-light
+			border-color: $blue-light
+	.wpcf7-display-none
+		display: none
+	.wpcf7-validation-errors,
+	.wpcf7-form.sent > *:not(.wpcf7-mail-sent-ok)
+		display: none !important
+	.wpcf7-mail-sent-ok
+		background: #fff
+		border-radius: 4px
+		display: block
+		font: rem(22) $serif
+		margin: rem(20) 0
+		overflow: hidden
+		padding: 1.5em .5em
+		position: relative
+		text-align: center
+		&:before
+			+stretch(0, false, 0, 0)
+			background-image: repeating-linear-gradient(30deg, rgba($yellow, .2), rgba($yellow, .2) 9px, transparent 9px, transparent 16px)
+			content: ""
+			display: block
+			pointer-events: none
+			width: rem(6)
+			z-index: 1
+		+breakpoint($xl)
+			margin-left:
+	.wp-caption
+		max-width: 100%
+	.wp-caption-dt,
+	.wp-caption-dd
+		+reset
+	dl.wp-caption dt.wp-caption-dt img
+		display: block
+		margin: 0
+	.wp-caption-text,
+	.wp-caption-dd,
+	h6
+		border-bottom: 1px dashed $yellow
+		display: block
+		font-size: rem(12)
+		padding: .5em .1em
+		a
+			border: 0 none
+			color: $blue
+			&:hover, &:focus
+				color: $yellow
+	.embed-youtube
+		+reset
+		display: block
+		margin: 0 0 rem(40)
+		position: relative
+		width: 100%
+		&:before
+			content: ""
+			display: block
+			padding-top: percentage(9/16)
+		iframe, object, embed, video
+			+stretch(0, false, false, 0)
+			display: block
+			height: 100%
+			width: 100%
+		+breakpoint($md)
+			margin: 0 auto rem(40)
+			width: 100% - gut($md) * 2
+		+breakpoint($lg)
+			margin: 0
+			width: 100%
+	.embed-container,
+	.wpview[data-wpview-type="embedURL"]
+		height: auto !important
+		overflow: visible !important
+		padding: 0 !important
+		position: relative
+		width: 100%
+		&:before
+			content: ""
+			display: block
+			padding-top: percentage(9/16)
+		iframe, object, embed, video
+			height: 100%
+			left: 0
+			position: absolute
+			top: 0
+			width: 100%
+	.gallery
+		display: flex
+		flex-wrap: wrap
+		margin-top: rem(map-get($sm, gut)) * -1
+		margin-left: rem(map-get($sm, gut)) * -1
+		padding-top: rem(20)
+	.gallery-item
+		+reset
+		padding: rem(map-get($sm, gut)) 0 0 rem(map-get($sm, gut))
+		width: 50%
+		img
+			height: auto
+			width: 100%
+		.gallery-caption
+			overflow: hidden
+			text-overflow: ellipsis
+			white-space: nowrap
+	.gallery-columns-1 .gallery-item
+		width: 100%
+	+breakpoint($md)
+		float: left
+		margin: rem(60) 0
+		padding: 0 gut($md)
+		width: col($md, 6)
+		.gallery
+			margin-top: rem(map-get($md, gut)) * -1
+			margin-left: rem(map-get($md, gut)) * -1
+		@for $i from 1 through 6
+			.gallery-columns-#{$i} .gallery-item
+				padding: rem(map-get($md, gut)) 0 0 rem(map-get($md, gut))
+				width: (100% / $i)
+	+breakpoint($lg)
+		padding: 0 gut($lg)
+		width: col($lg, 8)
+		.gallery
+			margin-top: rem(map-get($lg, gut)) * -1
+			margin-left: rem(map-get($lg, gut)) * -1
+		@for $i from 1 through 6
+			.gallery-columns-#{$i} .gallery-item
+				padding: rem(map-get($lg, gut)) 0 0 rem(map-get($lg, gut))
+	+breakpoint($xl)
+		margin-left: col($xl, 2)
+		padding: 0 gut($xl)
+		width: col($xl, 7)
+		.gallery
+			margin-top: rem(map-get($xl, gut)) * -1
+			margin-left: rem(map-get($xl, gut)) * -1
+		@for $i from 1 through 6
+			.gallery-columns-#{$i} .gallery-item
+				padding: rem(map-get($xl, gut)) 0 0 rem(map-get($xl, gut))

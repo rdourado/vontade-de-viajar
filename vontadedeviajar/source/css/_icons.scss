@@ -1,0 +1,95 @@
+@font-face {
+	font-family: "iconfont";
+	src: url("../fonts/iconfont.eot?8786acfaed1c06e947d166934bcf68ba?#iefix") format("embedded-opentype"),
+url("../fonts/iconfont.woff2?8786acfaed1c06e947d166934bcf68ba") format("woff2"),
+url("../fonts/iconfont.woff?8786acfaed1c06e947d166934bcf68ba") format("woff"),
+url("../fonts/iconfont.ttf?8786acfaed1c06e947d166934bcf68ba") format("truetype"),
+url("../fonts/iconfont.svg?8786acfaed1c06e947d166934bcf68ba#iconfont") format("svg");
+}
+
+@mixin icon-styles {
+	font-family: "iconfont";
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	speak: none;
+	text-decoration: none;
+	text-transform: none;
+}
+
+%icon {
+	@include icon-styles;
+}
+
+@function icon-char($filename) {
+	$char: "";
+	@if $filename == arrow {
+		$char: "\f101";
+	}
+	@if $filename == email {
+		$char: "\f102";
+	}
+	@if $filename == facebook {
+		$char: "\f103";
+	}
+	@if $filename == flipboard {
+		$char: "\f104";
+	}
+	@if $filename == googleplus {
+		$char: "\f105";
+	}
+	@if $filename == instagram {
+		$char: "\f106";
+	}
+	@if $filename == linkedin {
+		$char: "\f107";
+	}
+	@if $filename == magnifier {
+		$char: "\f108";
+	}
+	@if $filename == mail {
+		$char: "\f109";
+	}
+	@if $filename == pinterest {
+		$char: "\f10a";
+	}
+	@if $filename == reddit {
+		$char: "\f10b";
+	}
+	@if $filename == rss {
+		$char: "\f10c";
+	}
+	@if $filename == share {
+		$char: "\f10d";
+	}
+	@if $filename == tumblr {
+		$char: "\f10e";
+	}
+	@if $filename == twitter {
+		$char: "\f10f";
+	}
+	@if $filename == vimeo {
+		$char: "\f110";
+	}
+	@if $filename == whatsapp {
+		$char: "\f111";
+	}
+	@if $filename == youtube {
+		$char: "\f112";
+	}
+
+	@return $char;
+}
+
+@mixin icon($filename, $insert: before, $extend: true) {
+	&:#{$insert} {
+		@if $extend {
+			@extend %icon;
+		} @else {
+			@include icon-styles;
+		}
+		content: icon-char($filename);
+	}
+}

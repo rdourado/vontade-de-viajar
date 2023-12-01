@@ -1,0 +1,25 @@
+on:
+  push:
+    branches:
+      - master
+
+name: 🚀 Deploy theme on push
+jobs:
+  deploy_job:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
+
+      - name: 📂 Sync files
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          sftp_only: true
+          server: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASS }}
+          port: ${{ secrets.SSH_PORT }}
+          local_path: './vontadedeviajar/*'
+          remote_path: '/home/vontaded/public_html/wp-content/themes/vontadedeviajar'
+          sftpArgs: '-o ConnectTimeout=10'

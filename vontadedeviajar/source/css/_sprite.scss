@@ -1,0 +1,41 @@
+$compass: -334px -120px 73px 73px;
+$number-1: -0px -334px 47px 75px;
+$number-2: -394px -193px 59px 76px;
+$number-3: -334px -193px 60px 77px;
+$sea-card: -0px -0px 334px 334px;
+$stamp: -334px -0px 164px 120px;
+@mixin sprite-width($sprite) {
+  width: nth($sprite, 3);
+}
+@mixin sprite-height($sprite) {
+  height: nth($sprite, 4);
+}
+@function sprite-width($sprite) {
+   @return nth($sprite, 3);
+}
+@function sprite-height($sprite) {
+   @return nth($sprite, 4);
+}
+@mixin sprite-position($sprite) {
+  $sprite-offset-x: nth($sprite, 1);
+  $sprite-offset-y: nth($sprite, 2);
+  background-position: $sprite-offset-x $sprite-offset-y;
+}
+@mixin sprite($sprite, $display: block) {
+   @include sprite-position($sprite);
+  background-repeat: no-repeat;
+  overflow: hidden;
+  display: $display;
+  @include sprite-width($sprite);
+  @include sprite-height($sprite);
+}
+
+.vdv-sprite {
+  background-image: url('../img/sprite.png?6521be4d42c9c4c16865e8af565cff87566bd3cd');
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .vdv-sprite {
+    background-image: url('../img/sprite@2x.png?e355514c4864534e7df3f70cdc5fcaa45a4ce5bd');
+    background-size: 493px 404px;
+  }
+}
